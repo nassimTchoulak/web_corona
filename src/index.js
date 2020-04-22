@@ -5,9 +5,19 @@ import './index.css';
 import Core from "./Core";
 import * as serviceWorker from './serviceWorker';
 
+
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
+
+
 ReactDOM.render(
   <React.StrictMode>
+      <Provider store={store}>
+
     <Core />
+
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

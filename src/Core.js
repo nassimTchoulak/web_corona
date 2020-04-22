@@ -3,25 +3,21 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './core.css'
 import IP from './redux/Ip_provider'
 import {BrowserRouter as Router,Route , NavLink} from "react-router-dom";
-
+import Login from "./agent/Login";
+import Synthse from "./agent/Synthse";
 
 const Head = ({ routes }) =>{
 
 
         if(localStorage.getItem("token")===null){
-            return <div className={"col-xs-12"} style={{backgroundColor:"red"}} onClick={()=>{
-                localStorage.setItem("token","test")
-                window.location.reload()
-
-            }
-            }>authentification</div>
-        }
+            return <Login />
+                }
 
 
     return <div className={"col-xs-12 zero_pad"}>
 
 
-        <div className={"col-12 zero_pad menu_holder"} onClick={()=>{ //localStorage.clear()
+        <div className={"col-12 zero_pad menu_holder"} onClick={()=>{ localStorage.clear()
         }}>
 
             <div className={"col-xs-1"} >  <div to={"/"} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
@@ -71,8 +67,8 @@ const routes = [
         routes :[
             {
                 path:"/",
-                exact:"false",
-                component:Test
+                exact:false,
+                component:Synthse
             }
         ]
     }
@@ -87,7 +83,7 @@ const Core = ()=>{
 
 
                 {routes.map((route, i) => (
-                    <Router>
+                    <Router key={i}>
                      <RouteWithSubRoutes key={i} {...route} />
                     </Router>
                 ))}
