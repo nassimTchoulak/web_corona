@@ -1,0 +1,40 @@
+.synth_title{
+
+    color: white;
+    line-height: 180%;
+    font-family: "Exo", "Quicksand SemiBold";
+    font-weight: lighter;
+    font-size: 3em;
+
+}
+
+.main_holder{
+    box-shadow:  1px 1px 25px rgba(6, 6, 6, 0.76);
+
+
+}
+
+.info_item{
+    width: 100%;
+    border: solid 1px white;
+    border-radius: 5px 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 180%;
+    min-height: 100px;
+    background-color: rgba(0,0,0,0.3)
+
+}
+.white_info{
+    color: white;
+    line-height: 180%;
+    font-weight: normal;
+}
+
+.title_zone{
+color:#002148;
+    text-align:left;
+    padding-left:10%;
+    font-family: "Exo", "Quicksand SemiBold";
+
+}

@@ -15,7 +15,7 @@ export function get_data_dz_zones_now(token){
             redirect: 'follow'
         };
 
-        fetch(IP+"api/v0/zone/country?cc=DZ&sort=-confirmed", requestOptions)
+        fetch(IP+"/api/v0/zone/country?cc=DZ&sort=-confirmed", requestOptions)
             .then(result =>{
                 result.json().then((data)=>{
 
