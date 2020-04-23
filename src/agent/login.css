@@ -23,33 +23,3 @@
 }
 
 
-.my_text_box_v2{
-    border-radius: 5px 5px;
-    border: solid 1px #c4c4c4;
-    background-color: transparent;
-    width: 100%;
-    outline: none;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    font-weight: normal;
-
-
-}
-.my_text_box_v2:focus{
-    border: solid 1px white;
-}
-
-.my_button_v2{
-    border-radius: 5px 5px;
-    outline: none;
-    color: snow;
-    cursor: pointer;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #ff4275;
-    font-weight: lighter;
-    border: solid 0.4mm #ff4275;
-    width: 100%;
-    font-size: 120%;
-
-}

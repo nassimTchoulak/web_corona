@@ -2,6 +2,7 @@ import React, {useState} from "react"
 
 
 import './login.css'
+import "../default_ui.css"
 import IP from "../redux/Ip_provider";
 
 

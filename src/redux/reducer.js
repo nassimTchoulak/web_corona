@@ -1,5 +1,5 @@
 
-import { GET_DZ_NOW } from "./action"
+import {GET_DZ_NOW, SET_ACTIVE_DZ_ZONE} from "./action"
 
 
 
@@ -9,7 +9,8 @@ const init_state = {
 
     dz_now:{
         loaded:false ,
-        zones:[]
+        zones:[] ,
+        selected : {}
     },
 
 }
@@ -25,11 +26,22 @@ export function defaultReducer(state=init_state,action) {
             state = {...state,
                 dz_now : {
                     loaded: true ,
-                    zones : action.payload.data
+                    zones : action.payload.data ,
+                    selected: {}
                 }
 
             }
 
+
+            break ;
+        case SET_ACTIVE_DZ_ZONE:
+            state = {...state,
+
+                dz_now: {
+                    ...state.dz_now ,
+                    selected: action.payload
+                }
+            }
 
             break ;
 

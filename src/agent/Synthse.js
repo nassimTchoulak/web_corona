@@ -102,10 +102,7 @@ class Synthse extends React.Component{
 
             <div className={"col-xs-6"}>
 
-
-            {this.props.dz_now.zones.map((i,itr)=>{
-                return <div key={itr}> {i.city} </div>
-            })}
+                {this.props.dz_now.selected.city}
 
             </div>
 
@@ -119,7 +116,8 @@ const mapStatetoProps = (state) =>{
     return {
         dz_now: {
             loaded: state.dz_now.loaded , // . loaded data
-            zones : state.dz_now.zones
+            zones : state.dz_now.zones,
+            selected : state.dz_now.selected
         }
     }
 }
