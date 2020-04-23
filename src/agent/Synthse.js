@@ -3,6 +3,7 @@ import { get_data_dz_zones_now } from "../redux/action";
 import { connect } from 'react-redux'
 import IP from "../redux/Ip_provider";
 import './Synthese.css'
+import ListZones from "./ListZones";
 
 
 class Synthse extends React.Component{
@@ -18,7 +19,7 @@ class Synthse extends React.Component{
     }
 
     componentDidMount() {
-        if(localStorage.getItem("token")!==null){
+        if((localStorage.getItem("token")!==null)&&(!this.props.dz_now.loaded)){
             this.props.get_data_dz_zones_now(localStorage.getItem("token"))
         }
 
@@ -92,10 +93,10 @@ class Synthse extends React.Component{
             </div>
 
 
-            <div className={"col-xs-12"}> <h1 className={"title_zone"}> Les zones Affectés par Covid-19: </h1> </div>
+            <div className={"col-xs-12"} style={{marginBottom:"20px"}}> <h1 className={"title_zone"}> Les zones Affectés par Covid-19: </h1> </div>
 
             <div className={"col-xs-6"}>
-
+                <ListZones />
 
             </div>
 

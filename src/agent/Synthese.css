@@ -10,8 +10,6 @@
 
 .main_holder{
     box-shadow:  1px 1px 25px rgba(6, 6, 6, 0.76);
-
-
 }
 
 .info_item{
@@ -36,5 +34,39 @@ color:#002148;
     text-align:left;
     padding-left:10%;
     font-family: "Exo", "Quicksand SemiBold";
+}
 
+.sortable{
+    color: rgba(80, 80, 80, 0.73);
+    background-color: #f2f2f2;
+    font-weight: normal;
+    font-family: "Exo", "Quicksand SemiBold";
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 40px;
+    cursor: pointer;
+}
+.sortable:hover{
+    background-color: #dbdbdb;
+}
+
+.zone_row{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #c4c4c4;
+    min-height: 40px;
+}
+.zone_row>td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #c4c4c4;
+    min-height: 40px;
+    cursor: pointer;
+    font-family: Quicksand;
+}
+.zone_row:hover{
+    background-color: #ff8e92
+}
+.big_table{
+    box-shadow:  1px 1px 5px rgba(6, 6, 6, 0.21);
 }

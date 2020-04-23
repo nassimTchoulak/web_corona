@@ -19,9 +19,18 @@ export function get_data_dz_zones_now(token){
             .then(result =>{
                 result.json().then((data)=>{
 
-                    console.log(data.rows) ;
 
-                    dispatch( {type:GET_DZ_NOW , payload :{ data : data.rows }})
+
+                    let tmp = data.rows ;
+                    let final = [] ;
+                    tmp.forEach((i)=>{
+                        final.push(
+                            {...i, ...i.dataZones[0] ,dataZones:[] }
+                        )
+                    })
+                    console.log(final) ;
+
+                    dispatch( {type:GET_DZ_NOW , payload :{ data : final }})
 
 
                 })})
