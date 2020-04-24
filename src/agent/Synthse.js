@@ -5,6 +5,8 @@ import IP from "../redux/Ip_provider";
 import './Synthese.css'
 import ListZones from "./ListZones";
 
+import mapboxgl from 'mapbox-gl'
+import Map from "./Map";
 
 class Synthse extends React.Component{
 
@@ -95,14 +97,16 @@ class Synthse extends React.Component{
 
             <div className={"col-xs-12"} style={{marginBottom:"20px"}}> <h1 className={"title_zone"}> Les zones Affectés par Covid-19: </h1> </div>
 
-            <div className={"col-xs-6"}>
+            <div className={"col-xs-6"} style={{height:"500px"}}>
                 <ListZones />
 
             </div>
 
             <div className={"col-xs-6"}>
 
-                {this.props.dz_now.selected.city}
+
+
+                <Map />
 
             </div>
 

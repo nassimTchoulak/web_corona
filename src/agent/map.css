@@ -1,0 +1,44 @@
+.zone{
+    background-color: rgba(202, 0, 29, 0.4);
+    border-radius: 50% 50%;
+    position: relative;
+    margin-top:-50%;
+    left: -50%;
+    border: solid 1px #ff4275;
+    z-index: 10;
+    cursor: pointer;
+}
+.zone_selected{
+
+    background-color: rgba(0, 37, 202, 0.4);
+    border-radius: 50% 50%;
+    position: relative;
+    margin-top:-50%;
+    left: -50%;
+    border: solid 1px #2966ff;
+    z-index: 10;
+    cursor: pointer;
+
+
+}
+.selected_zone_info{
+
+    font-family: Quicksand;
+
+    position: absolute;
+    font-weight: lighter;
+    margin-top: 5px;
+    color: #252525;
+    background-image:linear-gradient(to top right, #f2f2f2 , #d1d3b8);
+    margin-left: -50%;
+    width: 100px;
+    border-radius: 5px 5px;
+
+
+}
+
+.selected_zone_info>div{
+    text-align: left;
+    padding-left: 10px;
+
+}
