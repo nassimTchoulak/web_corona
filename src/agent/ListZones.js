@@ -2,6 +2,7 @@ import React from "react";
 import { get_data_dz_zones_now ,set_active_dz_zone } from "../redux/action";
 import { connect } from 'react-redux'
 import IP from "../redux/Ip_provider";
+import {NavLink} from "react-router-dom";
 
 
 class ListZones extends React.Component{
@@ -101,7 +102,7 @@ class ListZones extends React.Component{
                             <td style={{width:"10%"}} > {i.totalActive}</td>
                             <td style={{width:"10%"}} >{i.totalRecovered}</td>
                             <td style={{width:"10%"}} >{i.totalConfirmed}</td>
-                            <td style={{width:"15%"}} >  <input type={"button"} className={"my_button_update"} value={"update"}/> </td>
+                            <td style={{width:"15%"}} >  <NavLink to={'/update_zone'} type={"button"} className={"my_button_update"} value={"update"}>update</NavLink> </td>
 
 
                         </tr>

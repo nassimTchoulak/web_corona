@@ -28,7 +28,7 @@
     font-size: 120%;
 }
 
-.my_button_update{
+.my_button_update,a.my_button_update {
     border-radius: 3px 3px;
     outline: none;
     color: snow;
@@ -41,8 +41,26 @@
     border: solid 0.4mm #002143;
     width: 80%;
     margin-left: 10%;
+    display: block;
 }
 
 .my_button_update:hover{
     background-color: #002b63;
+}
+
+
+a.my_button_update:hover{
+    color: snow;
+    text-decoration: none;
+}
+
+a.my_button_update {
+    background-color: #002143;
+
+    text-decoration: none;
+}
+a.my_button_update a:hover{
+
+    background-color: #002b63;
+    text-decoration: none;
 }

@@ -7,6 +7,7 @@ import ListZones from "./ListZones";
 
 import mapboxgl from 'mapbox-gl'
 import Map from "./Map";
+import {NavLink} from "react-router-dom";
 
 class Synthse extends React.Component{
 
@@ -100,6 +101,8 @@ class Synthse extends React.Component{
             <div className={"col-xs-6"} style={{height:"500px"}}>
                 <ListZones />
 
+                <div className={"col-xs-12"} style={{marginTop:"40px"}}> <NavLink to={'/new_zone'} type={"button"} className={"my_button_update"}  value={"Ajouter un nouvelle zone"}> Ajouter un nouvelle zone </NavLink> </div>
+
             </div>
 
             <div className={"col-xs-6"}>
@@ -107,6 +110,13 @@ class Synthse extends React.Component{
 
 
                 <Map />
+
+            </div>
+
+            <div className={"col-xs-12 zero_pad footer_style"} style={{marginTop:"100px",color:"white",textAlign:"left",padding:"30px"}}>
+
+                <div className={"col-xs-9"}> Sous la tutelle du <h4> Ministère de la Santé, de la Population et de la Réforme Hospitalière </h4> </div>
+                <div className={"col-xs-3"}>Algérie @2020</div>
 
             </div>
 

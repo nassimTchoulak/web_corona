@@ -5,6 +5,8 @@ import IP from './redux/Ip_provider'
 import {BrowserRouter as Router,Route , NavLink} from "react-router-dom";
 import Login from "./agent/Login";
 import Synthse from "./agent/Synthse";
+import UpdateZone from "./agent/UpdateZone";
+import NewZone from "./agent/NewZone";
 
 const Head = ({ routes }) =>{
 
@@ -28,7 +30,7 @@ const Head = ({ routes }) =>{
 
     </div>
 
-        <div className={"col-xs-12 "} style={{"backgroundColor":"white"}}>
+        <div className={"col-xs-12 zero_pad"} style={{"backgroundColor":"white"}}>
     {routes.map((route, i) => (
         <RouteWithSubRoutes key={i} {...route} />
     ))}
@@ -67,9 +69,19 @@ const routes = [
         routes :[
             {
                 path:"/",
-                exact:false,
+                exact:true,
                 component:Synthse
-            }
+            },
+            {
+                path:"/update_zone",
+                exact:true,
+                component:UpdateZone
+            },
+            {
+                path:"/new_zone",
+                exact:true,
+                component:NewZone
+            },
         ]
     }
 ];

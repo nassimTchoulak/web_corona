@@ -8,6 +8,8 @@ import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
 import {get_data_dz_zones_now, set_active_dz_zone} from "../redux/action";
 
 
+
+
 class Map extends React.Component {
     mapRef = React.createRef();
 
@@ -23,8 +25,8 @@ class Map extends React.Component {
             } ,
 
             marker: {
-                latitude: 34.785164,
-                longitude: 3
+                latitude: 22.783055,
+                longitude: 5.516666
             },
         };
 
@@ -71,6 +73,8 @@ class Map extends React.Component {
                             </Marker>
                         })
                     }
+
+                    <Marker {...this.state.marker}> <div style={{color:"red"}}>H</div> </Marker>
 
                     {
                         (this.props.dz_now.selected.city!==undefined)&& <Marker   {...this.props.dz_now.selected} >   <div className={"zone_selected "}
