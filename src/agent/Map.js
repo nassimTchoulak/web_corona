@@ -44,7 +44,7 @@ class Map extends React.Component {
 
     calculate_raduis(nb_cas){
 
-        return Math.floor((Math.pow(this.state.viewport.zoom,2)*nb_cas)/10)
+        return Math.floor((Math.pow(this.state.viewport.zoom,2)*Math.pow(nb_cas,0.5))/5)
 
         //     return Math.floor((Math.pow(this.state.viewport.zoom,2.5)*nb_cas)/10)
     }
@@ -75,7 +75,6 @@ class Map extends React.Component {
                         })
                     }
 
-                    <Marker {...this.state.marker}> <div style={{color:"red"}}>H</div> </Marker>
 
                     {
                         (this.props.dz_now.selected.city!==undefined)&& <Marker   {...this.props.dz_now.selected} >   <div className={"zone_selected "}
