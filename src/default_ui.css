@@ -25,7 +25,7 @@
     font-weight: lighter;
     border: solid 0.4mm #ff4275;
     width: 100%;
-    font-size: 120%;
+    font-size: 1.8em;
 }
 
 .my_button_update,a.my_button_update {
@@ -63,4 +63,48 @@ a.my_button_update a:hover{
 
     background-color: #002b63;
     text-decoration: none;
+}
+
+
+.my_text_box_v4{
+    border-radius: 5px 5px;
+    border: solid 1px #001126;
+    background-color: transparent;
+    color: #0a090e;
+    width: 100%;
+    outline: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: normal;
+    font-size: 110%;
+}
+.my_text_box_v4:focus{
+    border: solid 1px #003b84;
+}
+
+
+.my_text_box_v6{
+    border-radius: 5px 5px;
+    border: solid 1px #001126;
+    background-color: transparent;
+    color: #001531;
+    width: 100%;
+    outline: none;
+    height: 30px;
+    font-size: 140%;
+    margin-top: 10px;
+    font-weight: bolder;
+    text-align: center;
+    font-family: Quicksand;
+    height: available;
+
+
+}
+.my_text_box_v6:focus{
+    border: solid 1px #003b84;
+}
+
+.footer_style{
+
+    background-image:linear-gradient(to top , #0a090e , #313035);
 }

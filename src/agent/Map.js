@@ -6,6 +6,7 @@ import ReactMapGL , {Marker, NavigationControl}from 'react-map-gl'
 import {connect} from 'react-redux'
 import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
 import {get_data_dz_zones_now, set_active_dz_zone} from "../redux/action";
+import {API_TOKEN} from "../redux/Ip_provider";
 
 
 
@@ -58,7 +59,7 @@ class Map extends React.Component {
 
                 <ReactMapGL {...this.state.viewport}
                             onViewportChange={nextViewport => this.setState({viewport:nextViewport})}
-                            mapStyle={'mapbox://styles/mapbox/dark-v10'} mapboxApiAccessToken={'pk.eyJ1IjoibmFzZ3VubmVyIiwiYSI6ImNrOWRnMDRmOTAydmwzaXFsazh6eXJlNmgifQ.bYSxJQrZVfBGfn9z55JWGA'} >
+                            mapStyle={'mapbox://styles/mapbox/dark-v10'} mapboxApiAccessToken={API_TOKEN} >
 
 
 

@@ -19,8 +19,7 @@ const Head = ({ routes }) =>{
     return <div className={"col-xs-12 zero_pad"}>
 
 
-        <div className={"col-12 zero_pad menu_holder"} onClick={()=>{ localStorage.clear()
-        }}>
+        <div className={"col-12 zero_pad menu_holder"} >
 
             <div className={"col-xs-1"} >  <div to={"/"} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> Synthèse </NavLink> </div>
