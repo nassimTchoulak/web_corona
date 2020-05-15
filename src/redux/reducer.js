@@ -1,5 +1,5 @@
 
-import {GET_DZ_NOW, SET_ACTIVE_DZ_ZONE, GET_DZ_CITIES, GET_DZ_RISK, SET_VISIBLE_RISK} from "./action"
+import {GET_DZ_NOW, SET_ACTIVE_DZ_ZONE, GET_DZ_CITIES, GET_DZ_RISK, SET_VISIBLE_RISK, SET_UPDATE_ZONE} from "./action"
 
 
 
@@ -19,7 +19,10 @@ const init_state = {
         display_risk:false,
 
 
-        selected : {}
+        selected : {} ,
+
+
+        selected_for_update:{}//used in update window
     },
 
 }
@@ -84,6 +87,16 @@ export function defaultReducer(state=init_state,action) {
                 dz_now : {
                     ...state.dz_now ,
                     display_risk: action.payload
+                }
+            }
+            break
+
+        case SET_UPDATE_ZONE:
+            state = {
+                ...state ,
+                dz_now : {
+                    ...state.dz_now ,
+                    selected_for_update: action.payload
                 }
             }
             break

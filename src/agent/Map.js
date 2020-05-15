@@ -37,7 +37,8 @@ class Map extends React.Component {
 
 
 
-    calculate_raduis(nb_cas){
+    calculate_raduis(nb_cas=1){
+
 
         return Math.floor((Math.pow(this.state.viewport.zoom,2)*Math.pow(nb_cas,0.5))/5)
 
@@ -70,7 +71,10 @@ class Map extends React.Component {
                         this.props.dz_now.zones.map((i,itr)=>{
                             return  <Marker key={itr}
                                             {...i} >   <div className={"zone"} onMouseEnter={()=>{ this.props.set_active_dz_zone(i) }}
-                                                            style={{height:this.calculate_raduis(i.totalConfirmed),width:this.calculate_raduis(i.totalConfirmed)}}> </div>
+
+                                                            style={{height:this.calculate_raduis(i.totalConfirmed),
+
+                                                                width:this.calculate_raduis(i.totalConfirmed)}}> </div>
                             </Marker>
                         })
                     }

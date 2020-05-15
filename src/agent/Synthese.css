@@ -71,5 +71,43 @@ color:#002148;
     box-shadow:  1px 1px 5px rgba(6, 6, 6, 0.21);
 }
 
+.zone_row>td>input:not([type=button]){
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    background-color: transparent;
 
+    min-height: 40px;
+    font-size: 1em;
+    width: 100%;
+    line-height: 20px;
+    cursor: pointer;
+    font-family: Quicksand;
+}
+
+.zone_row>td>input:not([type=button]):focus{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    background-color: snow;
+
+    min-height: 40px;
+    font-size: 1em;
+    width: 100%;
+    cursor: pointer;
+    font-family: Quicksand;
+}
+
+.check_box{
+    background-color: #001531;
+    font-size: 150%;
+    color: black;
+
+}
 

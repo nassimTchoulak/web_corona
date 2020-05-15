@@ -21,7 +21,7 @@ import Pin from "../reusable/Pin"
 import querystr from "querystring";
 import coords_map from "../redux/wilayas.json";
 
-const pinStyle = {
+export const pinStyle = {
     color: '#dd4202',
     cursor:"move",
     position: "relative",
@@ -203,7 +203,7 @@ class NewZone extends React.Component{
                         .then((res)=>{console.log(res)
 
                             this.props.synchronize_data(localStorage.getItem("token"))
-                            window.location.pathname = '/'
+                            window.location.pathname = '/sante'
 
                         }).catch((err)=>{console.log(err)})
 
@@ -233,7 +233,7 @@ class NewZone extends React.Component{
                     insert_zone_data(localStorage.getItem("token"), _id, raw4).then((result) => {
                         console.log(result)
                         this.props.synchronize_data(localStorage.getItem("token"))
-                        window.location.pathname = '/'
+                        window.location.pathname = '/sante'
 
                     }).catch((er) => {
                         console.log(er)

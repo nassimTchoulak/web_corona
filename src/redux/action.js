@@ -10,6 +10,12 @@ export const GET_DZ_RISK = 'GET_DZ_RISK'
 
 export const SET_VISIBLE_RISK = 'SET_VISIBLE_RISK'
 
+export const SET_UPDATE_ZONE = 'SET_UPDATE_ZONE'
+
+
+export function set_displayed_update_zone(obj){
+    return {type:SET_UPDATE_ZONE , payload:obj}
+}
 
 
 export function set_active_dz_zone(obj) {
@@ -56,9 +62,10 @@ export function get_data_dz_zones_now(token){
                     let tmp = data.rows ;
                     let final = [] ;
                     tmp.forEach((i)=>{
+                        if(i.dataZones.length>0){
                         final.push(
                             {...i, ...i.dataZones[0] ,dataZones:[] }
-                        )
+                        )}
                     })
                     console.log(final) ;
 

@@ -28,6 +28,25 @@ export function delete_zone_risque(token,targetZoneId,ZonesRisqueList){
 
 }
 
+export function delete_zone_risque_from_risque_id(token,risque_id){
+    return new Promise((resolve,rejects)=>{
+            let myHeadersDEL2 = new Headers();
+            myHeadersDEL2.append("Authorization", "Bearer "+token);
+
+            let requestOptionsDEL2 = {
+                method: 'DELETE',
+                headers: myHeadersDEL2,
+                redirect: 'manual'
+            };
+            fetch(IP+"/api/v0/zoneRisque/"+risque_id, requestOptionsDEL2)
+                .then(response => response.json())
+                .then(result => resolve(result))
+                .catch(error => rejects({error}));
+
+    })
+
+}
+
 export function insert_zone_data(token,_id,raw4){
 
  return new Promise((resolve,reject)=>{

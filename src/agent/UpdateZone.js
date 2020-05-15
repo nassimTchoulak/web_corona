@@ -2,28 +2,77 @@ import React from "react";
 import { synchronize_data } from "../redux/action";
 import {connect} from 'react-redux'
 import data from "../redux/wilayas";
-import ReactMapGL from "react-map-gl/dist/es5/components/interactive-map";
+import ReactMapGL , {Marker, NavigationControl}from 'react-map-gl'
 import IP, {API_TOKEN} from "../redux/Ip_provider";
-import {Marker} from "react-map-gl";
+
 import Pin from "../reusable/Pin";
 import './newzone.css'
+import TableRowUpdate from "./TableRowUpdate";
+import {pinStyle} from "./NewZone";
 
 class UpdateZone extends React.Component{
 
     constructor(props){
         super(props);
 
-        console.log(props.selected)
+
         this.state = {
-            error:false
+            error:false ,
+            zones:[] ,
+
+            viewport: {
+                width: "35vw",
+                height: "50vh",
+                latitude: 32.430472,
+                longitude: 3.334102,
+                zoom: 5
+            },
+
+
+
         }
-        console.log(props.selected)
 
         if(props.selected.city===undefined){
-            window.location.pathname = '/'
+            window.location.pathname = '/sante'
         }
 
     }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.zones_risk!==prevProps.zones_risk){
+            this.synchronize_my_state()
+        }
+        if(this.props.zones!==prevProps.zones){
+            this.synchronize_my_state()
+        }
+
+    }
+    componentDidMount() {
+        this.synchronize_my_state()
+    }
+
+    synchronize_my_state(){
+        let zones = []
+        let tmp = []
+
+        this.props.zones_risk.map((i)=>{
+            if(i.city===this.props.selected.city){
+                zones.push({...i,is_risk:true,risked:true})
+                tmp.push(i.zoneZoneId)
+                console.log('rusk ',i)
+            }
+        })
+
+        this.props.zones.map((i)=>{
+            if((i.city===this.props.selected.city)&&(tmp.indexOf(i.zoneId)===-1)){
+                zones.push({...i,is_risk:false,diametre:10,cause:"",risked:false})
+                console.log('normal ',i)
+            }
+        })
+
+
+        this.setState({zones})
+    }
+
 
     parser_date(str){
         let dt = new Date(str);
@@ -35,158 +84,102 @@ class UpdateZone extends React.Component{
 
     render() {
 
-        return  <div className={"col-xs-12 zero_pad"}>
+        return  <div className={"col-xs-12 zero_pad"} >
             <div className={"col-xs-12"}>
 
-                <h1 className={"title_zone_new"} style={{paddingTop:"40px",paddingBottom:"30px"}}> Mettre à jour la zone de {this.props.selected.city} : </h1>
+                <h1 className={"title_zone_new"}> Mettre à jour la zone de {this.props.selected.city} : </h1>
             </div>
 
+
+            <div className={"col-xs-7"} style={{paddingTop:"20px",minHeight:"65vh"}}>
+                                        <h3 className={"col-xs-12 update_title"}> Dernière BILAN du {this.parser_date(this.props.selected.updatedAtCountry)} </h3>
+
+
+
+
+
+                                        <div className={"col-xs-6"} style={{textAlign:"left"}}>
+                                            <h3 className={"col-xs-6 update_title"}>  Confirmés : </h3> <h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.totalConfirmed} cas</h3>
+                                        </div>
+
+
+                                        <div className={"col-xs-6"} style={{textAlign:"left"}}>
+                                            <h3 className={"col-xs-6 update_title"}>  Actifs : </h3> <h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.totalActive} cas</h3>
+                                        </div>
+
+
+                                        <div className={"col-xs-6"} style={{textAlign:"left"}}>
+                                            <h3 className={"col-xs-6 update_title"}> Décès : </h3> <h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.totalDead} cas</h3>
+                                        </div>
+
+
+                                        <div className={"col-xs-6"} style={{textAlign:"left"}}>
+                                            <h3 className={"col-xs-6 update_title"}> Guéris : </h3> <h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.totalRecovered} cas</h3>
+                                        </div>
+
+
+
+
             <div className={"col-xs-12"}>
-                <div className={"col-xs-6"}>
-
-                    <h3 className={"title_zone_new"} style={{padding:"20px"}}> Mettre à jour les informations : </h3>
 
 
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
-                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
-                            <div className={"label_new col-xs-8"}> Total Cas Confirmés:</div>
-                            <div className={"col-xs-4"}> <input id={"confirmed"} defaultValue={this.props.selected.totalConfirmed} type={"number"} className={"my_text_box_v6"}/> </div>
-                        </div>
-                    </div>
+                <div className={"col-xs-12 zero_pad"}>
 
-
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
-                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
-                            <div className={"label_new col-xs-8"}> Total Cas Actifs:</div>
-                            <div className={"col-xs-4"}> <input id={"actif"} defaultValue={this.props.selected.totalActive} type={"number"} className={"my_text_box_v6"}/> </div>
-                        </div>
-                    </div>
-
-
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
-                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
-                            <div className={"label_new col-xs-8"}> Total Décès:</div>
-                            <div className={"col-xs-4"}> <input id={"deads"} defaultValue={this.props.selected.totalDead} type={"number"} className={"my_text_box_v6"}/> </div>
-                        </div>
-                    </div>
-
-
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
-                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
-                            <div className={"label_new col-xs-8"}> Total Guéris:</div>
-                            <div className={"col-xs-4"}> <input id={"gueris"} defaultValue={this.props.selected.totalRecovered} type={"number"} className={"my_text_box_v6"}/> </div>
-                        </div>
-                    </div>
-
-
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}> <h3 className={"title_zone_new"}>Informations complémentaires</h3> </div>
-
-
-
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
-                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
-                            <div className={"label_new col-xs-8"}> Total Cas Suspects:</div>
-                            <div className={"col-xs-4"}> <input id={"suspect"} type={"number"} defaultValue={0} className={"my_text_box_v6"}/> </div>
-                        </div>
-                    </div>
-
-
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
-                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
-                            <div className={"label_new col-xs-8"}> Total Cas critiques:</div>
-                            <div className={"col-xs-4"}> <input id={"critical"} type={"number"} defaultValue={0} className={"my_text_box_v6"}/> </div>
-                        </div>
-                    </div>
-
-
-                    <div className={"col-xs-6 col-xs-offset-3"} style={{paddingTop:"50px"}}>
-
-                        <input type={"button"} value={"Mettre à JOUR"} style={{backgroundColor:"rgba(0,21,49,0.96)",borderColor:"#002b63"}} className={"my_button_v2"}
-
-                                    onClick={()=>{
-
-
-                                        let actif = Number( document.querySelector("#actif").value )||0 ;
-                                        let dead = Number(document.querySelector("#deads").value )||0;
-                                        let confirmed = Number(document.querySelector("#confirmed").value )||0;
-                                        let gueris =Number( document.querySelector("#gueris").value )||0;
-                                        let suspect = Number( document.querySelector("#suspect").value )||0 ;
-                                        let critic = Number(document.querySelector("#critical").value )||0;
-
-                                        let _id = this.props.selected.zoneId ;
-                                        let myHeaders2 = new Headers();
-                                        myHeaders2.append("Authorization", "Bearer "+localStorage.getItem("token"));
-                                        myHeaders2.append("Content-Type", "application/json");
-
-                                        let raw4 = JSON.stringify({"totalPorteur":0,"totalSustects":suspect,"totalConfirmed":confirmed,"totalDead":dead,"totalRecovered":gueris,"dailyDeaths":0,"totalActive":actif,"totalCritical":critic,"zoneZoneId":_id});
-
-                                        let requestOptions1 = {
-                                            method: 'POST',
-                                            headers: myHeaders2,
-                                            body: raw4,
-                                            redirect: 'follow'
-                                        };
-
-                                        fetch(IP+"/api/v0/dataZone", requestOptions1)
-                                            .then(response3 => response3.json())
-                                            .then(result2 =>{console.log(result2) ;
-                                                this.props.synchronize_data(localStorage.getItem("token"))
-                                                window.location.pathname ='/'
-
-                                            })
-                                            .catch(error2 => console.log('error', error2));
-                                    }}
-
-                        />
-                    </div>
-
-                    {this.state.error&&<h4 className={"col-xs-12"}>les paramètres ne sont pas valide ou le lieu n'est pas selectionnné</h4>}
-
-
-
-                </div>
-
-                <div className={"col-xs-6"}>
-
-
-                    <h3 className={"title_zone_new"} style={{paddingTop:"20px"}}>Dernier bilan de la zone : </h3>
+                    <h2 className={"title_zone_new"} style={{paddingBottom:"10px"}} > Mettre à jour les informations : </h2>
 
                     <div className={"col-xs-12"} >
 
-                        <div  className={"col-xs-12"} style={{paddingTop:"30px",textAlign:"left"}}>
+                        <table className=" col-xs-12 zero_pad big_table" style={{paddingTop: "10px",fontSize:"120%",}}>
+                            <tbody  style={   {maxHeight: "60vh",overflowY: "scroll"}}>
 
-                            <h3 className={"col-xs-12 update_title"}> Dernière mise à jour le {this.parser_date(this.props.selected.dateDataZone)} </h3>
+                            <tr >
 
+                                <td style={{width:"10%"}} className={"sortable"} >Risqué</td>
+                                <td style={{width:"10%"}} className={"sortable"} >Diamètre</td>
+                                <td style={{width:"15%"}} className={"sortable"} >cause</td>
+                                <td style={{width:"10%"}} className={"sortable"} >décès</td>
 
-                            <div className={"col-xs-12"} style={{textAlign:"left"}}>
-                            <h3 className={"col-xs-3 col-xs-offset-2 update_title"}> la Ville : </h3> {(this.props.selected.city!==undefined)&&<h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.city.toUpperCase()}</h3>}
-                            </div>
+                                <td style={{width:"10%"}} className={"sortable"} > Suspects </td>
+                                <td style={{width:"10%"}} className={"sortable"} > Actifs </td>
+                                <td style={{width:"10%"}} className={"sortable"} > Géris </td>
+                                <td style={{width:"10%"}} className={"sortable"} > Confirmés </td>
+                                <td style={{width:"15%"}} className={"sortable"} > Update </td>
+                            </tr>
 
+                            {this.state.zones.map((i,itr)=>{
+                                return <TableRowUpdate key={itr} data={i}  />
+                            })}
 
-                            <div className={"col-xs-12"} style={{textAlign:"left"}}>
-                                <h3 className={"col-xs-3 col-xs-offset-2 update_title"}>  Confirmés : </h3> <h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.totalConfirmed} cas</h3>
-                            </div>
-
-
-                            <div className={"col-xs-12"} style={{textAlign:"left"}}>
-                                <h3 className={"col-xs-3 col-xs-offset-2 update_title"}>  Actifs : </h3> <h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.totalActive} cas</h3>
-                            </div>
-
-
-                            <div className={"col-xs-12"} style={{textAlign:"left"}}>
-                                <h3 className={"col-xs-3 col-xs-offset-2 update_title"}> Décès : </h3> <h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.totalDead} cas</h3>
-                            </div>
-
-
-                            <div className={"col-xs-12"} style={{textAlign:"left"}}>
-                                <h3 className={"col-xs-3 col-xs-offset-2 update_title"}> Guéris : </h3> <h3 style={{fontWeight:"bold"}} className={"col-xs-5"}>{this.props.selected.totalRecovered} cas</h3>
-                            </div>
-
-
-                        </div>
-
+                            </tbody>
+                        </table>
+                        clickez sur les elements pour pouvoir les modifier
                     </div>
+
+
+
+
                 </div>
+
+            </div>
+
+            </div>
+
+            <div className={"col-xs-5"}>
+
+                <h3 className={"title_zone_new"} style={{paddingBottom:"10px",paddingTop:"20px"}} > La zone en question : </h3>
+
+                <ReactMapGL {...this.state.viewport}
+                            onViewportChange={nextViewport => this.setState({viewport:nextViewport})}
+                            mapStyle={'mapbox://styles/mapbox/dark-v10'} mapboxApiAccessToken={API_TOKEN} >
+
+
+
+                    {(this.props.selected_for_update.latitude!==undefined)&&<Marker   {...this.props.selected_for_update} draggable={false}
+
+                    > <span style={pinStyle} className={"glyphicon glyphicon-map-marker"}></span> </Marker>}
+
+
+                </ReactMapGL>
 
             </div>
 
@@ -207,7 +200,10 @@ class UpdateZone extends React.Component{
 
 const mapStateToProps = (state) =>{
     return {
-        selected : state.dz_now.selected
+        selected : state.dz_now.selected ,
+        zones : state.dz_now.zones ,
+        zones_risk :state.dz_now.zones_risk ,
+        selected_for_update : state.dz_now.selected_for_update
     }
 }
 const mapDispatchToProps = {
