@@ -1,5 +1,5 @@
 import React from "react";
-import {get_data_dz_zones_now} from "../redux/action";
+import { synchronize_data } from "../redux/action";
 import {connect} from 'react-redux'
 import data from "../redux/wilayas";
 import ReactMapGL from "react-map-gl/dist/es5/components/interactive-map";
@@ -129,7 +129,7 @@ class UpdateZone extends React.Component{
                                         fetch(IP+"/api/v0/dataZone", requestOptions1)
                                             .then(response3 => response3.json())
                                             .then(result2 =>{console.log(result2) ;
-                                                this.props.get_data_dz_zones_now(localStorage.getItem("token"))
+                                                this.props.synchronize_data(localStorage.getItem("token"))
                                                 window.location.pathname ='/'
 
                                             })
@@ -210,7 +210,7 @@ const mapStateToProps = (state) =>{
     }
 }
 const mapDispatchToProps = {
-    get_data_dz_zones_now
+   synchronize_data
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(UpdateZone)

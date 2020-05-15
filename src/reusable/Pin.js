@@ -10,7 +10,8 @@ const pinStyle = {
     stroke: 'none',
     position: "relative",
     marginTop:"-100%",
-    left: "-50%"
+    left: "-50%",
+    fontSize:"200%"
 
 };
 

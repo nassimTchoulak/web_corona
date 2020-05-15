@@ -25,7 +25,7 @@ const Login = ()=>{
         <div className={"col-xs-12"} style={{paddingTop:"50px"}}>
 
             <div className={"col-xs-offset-1 col-xs-3"}>
-                <img src={IP+"/api/v0/assets/logo.png"} width={"200px"} />
+                <img id={'login_logo'} src={IP+"/api/v0/assets/logo.png"} width={"200px"} />
             </div>
 
             <div className={" col-xs-7 login_start"}>

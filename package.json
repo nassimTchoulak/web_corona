@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.9.11",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -11,15 +10,18 @@
     "bootstrap": "^3.4.1",
     "enzyme": "^3.11.0",
     "jasmine": "^3.5.0",
-    "mapbox-gl": "^1.9.1",
+    "mapbox-gl": "^1.10.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-map-gl": "^5.2.5",
+    "react-markdown": "^4.3.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-select": "^3.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.26.5",
     "styled-components": "^5.1.0"
   },
   "scripts": {

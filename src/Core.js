@@ -7,6 +7,7 @@ import Login from "./agent/Login";
 import Synthse from "./agent/Synthse";
 import UpdateZone from "./agent/UpdateZone";
 import NewZone from "./agent/NewZone";
+import TestRedaction from "./agent/TestRedaction";
 
 const Head = ({ routes }) =>{
 
@@ -25,7 +26,7 @@ const Head = ({ routes }) =>{
             <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> Synthèse </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> Statistiques</NavLink> </div>
             <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/"} className={"menu_item"}> Mes Consignes </NavLink> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> Profil </NavLink> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/redaction"} className={"menu_item"}> Profil </NavLink> </div>
 
     </div>
 
@@ -56,9 +57,7 @@ const RouteWithSubRoutes= (route)=> {
     );
 }
 
-const Test = () =>{
-    return  <div>hello world</div>
-}
+
 
 const routes = [
     {
@@ -80,6 +79,11 @@ const routes = [
                 path:"/new_zone",
                 exact:true,
                 component:NewZone
+            },
+            {
+                path:"/redaction",
+                exact:true,
+                component:TestRedaction
             },
         ]
     }

@@ -3,6 +3,7 @@ import { get_data_dz_zones_now ,set_active_dz_zone } from "../redux/action";
 import { connect } from 'react-redux'
 import IP from "../redux/Ip_provider";
 import {NavLink} from "react-router-dom";
+import coords_map from "../redux/wilayas.json";
 
 
 class ListZones extends React.Component{
@@ -10,7 +11,7 @@ class ListZones extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-                data :props.dz_now.zones ,
+                data :props.dz_now.zones_cities ,
 
 
         }
@@ -18,10 +19,10 @@ class ListZones extends React.Component{
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if((this.props.dz_now.loaded)&&(!prevProps.dz_now.loaded)){
+        if((this.props.dz_now.loaded_cities)&&(!prevProps.dz_now.loaded_cities)){
 
 
-           this.setState({data:this.props.dz_now.zones})
+           this.setState({data:this.props.dz_now.zones_cities})
         }
     }
 
@@ -91,12 +92,12 @@ class ListZones extends React.Component{
                     this.state.data.map((i,itr)=>{
 
                         return <tr key={itr} className={"zone_row"}  onMouseEnter={()=>{
-                            this.props.set_active_dz_zone(i)
+                            this.props.set_active_dz_zone({...i , ...coords_map.map[i.city] })
                         }} onMouseLeave={()=>{
                             this.props.set_active_dz_zone({})
                         }}>
                             <td style={{width:"15%"}} > {i.city.toUpperCase()}</td>
-                            <td style={{width:"20%"}} >il y'a {this.parser_diff_comment(i.updatedAt)}</td>
+                            <td style={{width:"20%"}} >il y'a {this.parser_diff_comment(i.updatedAtCountry)}</td>
                             <td style={{width:"10%"}} >{i.totalDead}</td>
                             <td style={{width:"10%"}} > {i.totalSustects}</td>
                             <td style={{width:"10%"}} > {i.totalActive}</td>
@@ -125,13 +126,15 @@ const mapStatetoProps = (state) =>{
     return {
         dz_now: {
             loaded: state.dz_now.loaded , // . loaded data
-            zones : state.dz_now.zones
+            zones : state.dz_now.zones ,
+            zones_cities : state.dz_now.zones_cities ,
+            loaded_cities : state.dz_now.loaded_cities ,
         }
     }
 }
 
 const mapDispatchToProps = {
-    get_data_dz_zones_now , set_active_dz_zone
+      set_active_dz_zone
 }
 
 export default connect(mapStatetoProps,mapDispatchToProps)(ListZones)

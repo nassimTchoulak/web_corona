@@ -1,5 +1,5 @@
 import React from "react";
-import { get_data_dz_zones_now } from "../redux/action";
+import {    synchronize_data} from "../redux/action";
 import { connect } from 'react-redux'
 import IP from "../redux/Ip_provider";
 import './Synthese.css'
@@ -16,14 +16,19 @@ class Synthse extends React.Component{
 
         this.state = {
             global_dz : {
+                updatedAtCountry:"2020-05-09T23:27:30.079Z",
+                totalDead:0,
+                totalActive:0,
+                totalConfirmed:0 ,
+                totalRecovered:0
 
             }
         }
     }
 
     componentDidMount() {
-        if((localStorage.getItem("token")!==null)&&(!this.props.dz_now.loaded)){
-            this.props.get_data_dz_zones_now(localStorage.getItem("token"))
+        if((localStorage.getItem("token")!==null)&&(!this.props.dz_now.loaded)&&(!this.props.dz_now.loaded_cities)){
+            this.props.synchronize_data(localStorage.getItem("token"))
         }
 
 
@@ -39,11 +44,13 @@ class Synthse extends React.Component{
         fetch(IP+"/api/v0/zone/groupByCountry?cc=DZ&sort=-dead", requestOptions)
             .then(response => response.json().then((data)=>{
 
-                this.setState({
-                        global_dz:data.items[0]
-                })
+               if(data.items.length>0) {
+                   this.setState({
+                       global_dz: data.items[0]
+                   })
+               }
 
-                console.log(data.items[0])
+
 
             }).catch((errr)=>{console.log(errr)}))
 
@@ -101,7 +108,7 @@ class Synthse extends React.Component{
             <div className={"col-xs-6"} style={{height:"500px"}}>
                 <ListZones />
 
-                <div className={"col-xs-12"} style={{marginTop:"40px"}}> <NavLink to={'/new_zone'} type={"button"} className={"my_button_update"}  value={"Ajouter un nouvelle zone"}> Ajouter un nouvelle zone </NavLink> </div>
+                <div className={"col-xs-12"} style={{marginTop:"40px",fontSize:"140%"}}> <NavLink to={'/new_zone'} type={"button"} className={"my_button_update"}  value={"Ajouter un nouvelle zone"}> Ajouter un nouvelle zone </NavLink> </div>
 
             </div>
 
@@ -132,14 +139,18 @@ const mapStatetoProps = (state) =>{
     return {
         dz_now: {
             loaded: state.dz_now.loaded , // . loaded data
+            loaded_cities:state.dz_now.loaded_cities ,
+
             zones : state.dz_now.zones,
+            zones_cities : state.dz_now.zones_cities ,
             selected : state.dz_now.selected
         }
     }
 }
 
 const mapDispatchToProps = {
-    get_data_dz_zones_now
+      synchronize_data
+
 }
 
 export default connect(mapStatetoProps,mapDispatchToProps)(Synthse)

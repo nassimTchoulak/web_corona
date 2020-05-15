@@ -1,12 +1,12 @@
 import React from 'react'
-import mapboxgl from 'mapbox-gl'
-import {} from 'mapbox-gl'
+
 import './map.css'
 import ReactMapGL , {Marker, NavigationControl}from 'react-map-gl'
 import {connect} from 'react-redux'
-import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
-import {get_data_dz_zones_now, set_active_dz_zone} from "../redux/action";
+
+import {set_active_dz_zone} from "../redux/action";
 import {API_TOKEN} from "../redux/Ip_provider";
+import coords_map from '../redux/wilayas.json'
 
 
 
@@ -36,11 +36,6 @@ class Map extends React.Component {
     }
 
 
-    componentDidMount() {
-
-
-
-    }
 
     calculate_raduis(nb_cas){
 
@@ -64,6 +59,7 @@ class Map extends React.Component {
 
 
                     {
+                        (this.state.viewport.zoom>5)&&
                         this.props.dz_now.zones.map((i,itr)=>{
                             return  <Marker key={itr}
                                             {...i} >   <div className={"zone"} onMouseEnter={()=>{ this.props.set_active_dz_zone(i) }}
@@ -73,6 +69,22 @@ class Map extends React.Component {
 
                             </Marker>
                         })
+                    }
+
+                    {
+
+                        (this.state.viewport.zoom<=5)&&
+                        this.props.dz_now.zones_cities.map((i,itr)=>{
+                            return  <Marker key={itr}
+                                            {...coords_map.map[i.city]} >   <div className={"zone"} onMouseEnter={()=>{ this.props.set_active_dz_zone({...i , ...coords_map.map[i.city] }) }}
+
+
+                                                            style={{height:this.calculate_raduis(i.totalConfirmed),width:this.calculate_raduis(i.totalConfirmed)}}> </div>
+
+                            </Marker>
+                        })
+
+
                     }
 
 
@@ -104,7 +116,9 @@ const mapStateToProps_ = (state) =>{
         return {
             dz_now: {
                 loaded: state.dz_now.loaded , // . loaded data
+                loaded_cities:state.dz_now.loaded_cities ,
                 zones : state.dz_now.zones,
+                zones_cities : state.dz_now.zones_cities ,
                 selected : state.dz_now.selected
             }
 

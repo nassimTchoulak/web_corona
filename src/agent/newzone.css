@@ -8,7 +8,7 @@
 
     color: rgba(80, 80, 80, 0.73);
     font-weight: normal;
-    font-size: 2em;
+    font-size: 1.6em;
     font-family: "Exo", "Quicksand SemiBold";
 }
 
@@ -18,4 +18,54 @@
     font-family: Quicksand;
     font-weight: lighter;
 
+}
+
+.my_select .item .text{
+    font-size: 2em;
+    color: red;
+}
+.my_select .text{
+    color: #ff4275;
+    font-size: 2em;
+
+}
+
+
+.my_select_element {
+    border-radius: 3px 3px;
+    outline: none;
+    color: snow;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #1a4678;
+    font-weight: normal;
+    font-family: "Quicksand" ;
+    border: solid 0.4mm #002143;
+    width: 80%;
+    margin-left: 10%;
+    display: block;
+}
+.my_select_element:hover{
+    background-color: #5998e3;
+}
+
+.create_button{
+    background-color: #fa5b5b;
+    border-color: #fa5b5b;
+    box-shadow:  5px 5px 5px rgba(6, 6, 6, 0.21) ;
+
+    border-radius: 5px 5px;
+    outline: none;
+    color: snow;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: lighter;
+    width: 100%;
+    font-size: 1.8em;
+}
+.create_button:hover{
+    background-color: #f2b3b3;
+    border-color: #f2b3b3;
 }
