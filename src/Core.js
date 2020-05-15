@@ -8,26 +8,24 @@ import Synthse from "./agent/Synthse";
 import UpdateZone from "./agent/UpdateZone";
 import NewZone from "./agent/NewZone";
 import TestRedaction from "./agent/TestRedaction";
+import Login_Redacteur from "./redacteur/Login_Redacteur";
+import Redaction from "./redacteur/Redaction";
+import FirstAction from "./FirstAction";
 
-const Head = ({ routes }) =>{
-
+const Head_sante = ({ routes }) =>{
 
         if(localStorage.getItem("token")===null){
             return <Login />
                 }
 
-
     return <div className={"col-xs-12 zero_pad"}>
-
-
         <div className={"col-12 zero_pad menu_holder"} >
 
-            <div className={"col-xs-1"} >  <div to={"/"} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> Synthèse </NavLink> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> Statistiques</NavLink> </div>
+            <div className={"col-xs-1"} >  <div to={"/sante"} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/sante"} className={"menu_item"}> Synthèse </NavLink> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/sante"} className={"menu_item"}> Statistiques</NavLink> </div>
             <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/"} className={"menu_item"}> Mes Consignes </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/redaction"} className={"menu_item"}> Profil </NavLink> </div>
-
     </div>
 
         <div className={"col-xs-12 zero_pad"} style={{"backgroundColor":"white"}}>
@@ -36,9 +34,34 @@ const Head = ({ routes }) =>{
     ))}
                 </div>
     </div>
-
-
 }
+
+
+
+const HEAD_REDACTION = ({ routes }) =>{
+
+    if(localStorage.getItem("re_token")===null){
+        return <Login_Redacteur />
+    }
+
+    return <div className={"col-xs-12 zero_pad"}>
+        <div className={"col-12 zero_pad menu_holder"} >
+
+            <div className={"col-xs-1"} >  <div to={"/redaction"} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> TOUT LES ARTICLES </NavLink> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> MES ARTICLES</NavLink> </div>
+            <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/"} className={"menu_item"}> REDIGER </NavLink> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/sante/redaction"} className={"menu_item"}> Profil </NavLink> </div>
+        </div>
+
+        <div className={"col-xs-12 zero_pad"} style={{"backgroundColor":"white"}}>
+            {routes.map((route, i) => (
+                <RouteWithSubRoutes key={i} {...route} />
+            ))}
+        </div>
+    </div>
+}
+
 
 
 
@@ -60,31 +83,50 @@ const RouteWithSubRoutes= (route)=> {
 
 
 const routes = [
-    {
-        path:"/",
-        component:Head,
+
+        {
+            path:"/",
+            component:FirstAction,
+            exact:true,
+        },
+        {
+        path:"/sante",
+        component:Head_sante,
         exact:false,
         routes :[
             {
-                path:"/",
+                path:"/sante",
                 exact:true,
                 component:Synthse
             },
             {
-                path:"/update_zone",
+                path:"/sante/update_zone",
                 exact:true,
                 component:UpdateZone
             },
             {
-                path:"/new_zone",
+                path:"/sante/new_zone",
                 exact:true,
                 component:NewZone
             },
             {
-                path:"/redaction",
+                path:"/sante/redaction",
                 exact:true,
                 component:TestRedaction
             },
+        ]
+    },
+    {
+        path: "/redaction",
+        component:HEAD_REDACTION,
+        exact: false,
+        routes : [
+            {
+            path: "/redaction",
+                exact: true ,
+                component: Redaction
+
+             }
         ]
     }
 ];

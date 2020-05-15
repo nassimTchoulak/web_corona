@@ -37,3 +37,23 @@ a.menu_item:hover{
     min-height: 60px;
     background-color: #002143;
 }
+
+
+.role_selection{
+
+    min-height: 100px;
+    background-color: #1f3d61;
+    color: snow;
+    font-family: "Exo", "Quicksand SemiBold";
+    font-weight: lighter;
+    font-size: 150%;
+    border: solid 1px #dbdbdb;
+    box-shadow:  5px 5px 5px rgba(6, 6, 6, 0.21);
+    cursor: pointer;
+    padding: 20px;
+    line-height: 40px;
+}
+.role_selection:hover{
+    background-image: linear-gradient(to top right,#001531,#002148);
+
+}

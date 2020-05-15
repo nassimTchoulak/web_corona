@@ -64,7 +64,7 @@ const Login = ()=>{
                                     redirect: 'follow'
                                 };
 
-                                fetch("http://localhost:8080/api/v0/auth/authAgentSante/local/login", requestOptions)
+                                fetch(IP+"/api/v0/auth/authAgentSante/local/login", requestOptions)
                                     .then(result =>{
                                             result.json().then((data)=>{
                                                 if(data.auth){
