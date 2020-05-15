@@ -6,7 +6,9 @@ export const GET_DZ_CITIES = 'GET_DZ_CITIES'
 
 export const SET_ACTIVE_DZ_ZONE = 'SET_DZ_ACTIVE_ZONE' ;
 
+export const GET_DZ_RISK = 'GET_DZ_RISK'
 
+export const SET_VISIBLE_RISK = 'SET_VISIBLE_RISK'
 
 
 
@@ -16,12 +18,19 @@ export function set_active_dz_zone(obj) {
 
 }
 
+export function set_visible_zones_risk(bool){
+
+
+    return {type : SET_VISIBLE_RISK , payload : bool}
+}
+
 
 
 export function synchronize_data(token) {
     return dispatch => Promise.all([
-        dispatch(get_data_dz_zones_now()),
-        dispatch(get_data_dz_cities_now())
+        dispatch(get_data_dz_zones_now(token)),
+        dispatch(get_data_dz_cities_now(token)),
+        dispatch(get_zones_risques_all(token))
     ]);
 }
 
@@ -88,5 +97,39 @@ export function get_data_dz_cities_now(token){
                 })})
 
             .catch(error => console.log('error', error));
+    }
+}
+
+export function get_zones_risques_all(token){
+    return (dispatch)=>{
+
+        let myHeadersT = new Headers();
+        myHeadersT.append("Authorization", "Bearer "+token);
+
+        let RTrequestOptions = {
+            method: 'GET',
+            headers: myHeadersT,
+            redirect: 'manual'
+        };
+
+        fetch(IP+"/api/v0/zoneRisque", RTrequestOptions)
+            .then(response => response.json())
+            .then(result => {
+                let tmp = result.items.rows ;
+                let final = [] ;
+                tmp.forEach((i)=>{
+                    final.push(
+                        {...i, ...i.zone ,...i.zone.dataZones[0] , zone:"" }
+                    )
+                })
+
+                console.log(final)
+
+                dispatch( {type:GET_DZ_RISK , payload :{ data : final }})
+
+
+            })
+            .catch(error => console.log('error', error));
+
     }
 }

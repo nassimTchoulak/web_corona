@@ -23,14 +23,26 @@ class ListZones extends React.Component{
 
 
            this.setState({data:this.props.dz_now.zones_cities})
+
         }
     }
 
 
     onSort(event, sortKey){
 
+
         let data = [...this.state.data];
-        data.sort((a,b) => a[sortKey].toString().localeCompare(b[sortKey].toString())   ) ;
+
+        if((data.length>0)&&(!isNaN(data[0][sortKey]))){
+            data = data.sort((a,b)=> (a[sortKey]-b[sortKey]) );
+
+        }
+        else {
+
+           data =  data.sort((a, b) => a[sortKey].toString().localeCompare(b[sortKey].toString()));
+
+        }
+
         if(JSON.stringify(data)===JSON.stringify(this.state.data)){
             data = data.reverse() ;
         }
@@ -68,17 +80,18 @@ class ListZones extends React.Component{
     render() {
 
 
-        return <div className={"col-xs-12"}>
+        return <div className={"col-xs-12"} >
 
 
-            <table className=" col-xs-12 zero_pad big_table" style={{paddingTop: "10px",fontSize:"120%"}}>
+            <table className=" col-xs-12 zero_pad big_table" style={{paddingTop: "10px",fontSize:"120%",}}>
 
-                <tbody>
+
+                <tbody  style={   {maxHeight: "60vh",overflowY: "scroll"}}>
 
                 <tr >
 
                     <td style={{width:"15%"}} className={"sortable"} onClick={e => this.onSort(e, 'city')}>Wilaya</td>
-                    <td style={{width:"20%"}} className={"sortable"} onClick={e => this.onSort(e, 'updatedAt')}>Mis à jour</td>
+                    <td style={{width:"20%"}} className={"sortable"} onClick={e => this.onSort(e, 'updatedAtCountry')}>Mis à jour</td>
                     <td style={{width:"10%"}} className={"sortable"} onClick={e => this.onSort(e, 'totalDead')}>décès</td>
 
                     <td style={{width:"10%"}} className={"sortable"} onClick={e => this.onSort(e, 'totalSustects')}> Suspects </td>
@@ -87,6 +100,7 @@ class ListZones extends React.Component{
                     <td style={{width:"10%"}} className={"sortable"} onClick={e => this.onSort(e, 'totalConfirmed')}> Confirmés </td>
                     <td style={{width:"15%"}} className={"sortable"} > Update </td>
                 </tr>
+
 
                 {
                     this.state.data.map((i,itr)=>{

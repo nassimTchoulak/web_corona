@@ -17,6 +17,7 @@ class UpdateZone extends React.Component{
         this.state = {
             error:false
         }
+        console.log(props.selected)
 
         if(props.selected.city===undefined){
             window.location.pathname = '/'

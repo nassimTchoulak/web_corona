@@ -1,5 +1,5 @@
 import React from "react";
-import {    synchronize_data} from "../redux/action";
+import {    synchronize_data , set_visible_zones_risk} from "../redux/action";
 import { connect } from 'react-redux'
 import IP from "../redux/Ip_provider";
 import './Synthese.css'
@@ -22,7 +22,8 @@ class Synthse extends React.Component{
                 totalConfirmed:0 ,
                 totalRecovered:0
 
-            }
+            },
+            show_select :false
         }
     }
 
@@ -103,9 +104,49 @@ class Synthse extends React.Component{
             </div>
 
 
-            <div className={"col-xs-12"} style={{marginBottom:"20px"}}> <h1 className={"title_zone"}> Les zones Affectés par Covid-19: </h1> </div>
+            <div className={"col-xs-7"} style={{marginBottom:"20px"}}> <h1 className={"title_zone"}> Les zones Affectés par Covid-19: </h1> </div>
 
-            <div className={"col-xs-6"} style={{height:"500px"}}>
+            <div className={"col-xs-5"} style={{marginBottom:"20px"}}>
+
+
+
+                <h2 className={"title_zone col-xs-6"}> LES ZONES EN : </h2>
+
+
+                <div className={"col-xs-4 "} style={{marginTop:"20px"}} onClick={()=>{
+
+                    this.setState({show_select:!this.state.show_select})
+                    //console.log(this.props.dz_now.show_risk)
+
+                }}
+                     onMouseLeave={()=>{this.setState({show_select:false})}} >
+
+                    <div align={"center"}  className={"my_button_update col-xs-12"}>  { this.props.dz_now.display_risk ? " RISQUES " :"DONNEES"} <span>&nbsp;&nbsp;</span> <span className={"glyphicon glyphicon-chevron-down"}></span></div>
+
+                    <div className={"col-xs-12 zero_pad"} style={{position:"relative",zIndex:50}}>
+
+                        {this.state.show_select&&<div  className={"zero_pad col-xs-12"} style={{position:"absolute",top:"0px",left:"0px"}}>
+
+                            <div onClick={()=>{
+                                this.props.set_visible_zones_risk(false)
+                            }} className={"my_select_element col-xs-12"} > en données </div>
+
+
+                            <div onClick={()=>{
+                                this.props.set_visible_zones_risk(true)
+                            }}
+                                className={"my_select_element col-xs-12"} > en risques </div>
+
+                        </div>}
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+            <div className={"col-xs-6 list_zone_table"} >
                 <ListZones />
 
                 <div className={"col-xs-12"} style={{marginTop:"40px",fontSize:"140%"}}> <NavLink to={'/new_zone'} type={"button"} className={"my_button_update"}  value={"Ajouter un nouvelle zone"}> Ajouter un nouvelle zone </NavLink> </div>
@@ -143,13 +184,17 @@ const mapStatetoProps = (state) =>{
 
             zones : state.dz_now.zones,
             zones_cities : state.dz_now.zones_cities ,
+            zones_risk : state.dz_now.zones_risk ,
+
+            display_risk : state.dz_now.display_risk ,
+
             selected : state.dz_now.selected
         }
     }
 }
 
 const mapDispatchToProps = {
-      synchronize_data
+      synchronize_data , set_visible_zones_risk
 
 }
 

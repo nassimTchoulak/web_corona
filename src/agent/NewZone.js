@@ -6,7 +6,12 @@ import '../default_ui.css'
 import Axios from "axios";
 
 
-import { get_place_query } from "../http_requests/http_zones"
+import {
+    get_place_query,
+    insert_zone_data,
+    insert_zone_risque_only,
+    insert_zone_risque_with_delete
+} from "../http_requests/http_zones"
 import ReactMapGL , {Marker, NavigationControl}from 'react-map-gl'
 import {connect} from 'react-redux'
 import IP, {API_TOKEN} from "../redux/Ip_provider";
@@ -14,6 +19,7 @@ import {   synchronize_data } from "../redux/action";
 import Pin from "../reusable/Pin"
 
 import querystr from "querystring";
+import coords_map from "../redux/wilayas.json";
 
 const pinStyle = {
     color: '#dd4202',
@@ -21,7 +27,8 @@ const pinStyle = {
     position: "relative",
     top:"-40px",
     left: "-51%",
-    fontSize:"3em"
+    fontSize:"3em",
+    zIndex:100
 
 };
 
@@ -65,6 +72,9 @@ class NewZone extends React.Component{
             },
 
             show_select:false,
+
+            show_risk:true,
+            risk_radius:0 ,
 
             error:false
         }
@@ -136,6 +146,11 @@ class NewZone extends React.Component{
             }
     }
 
+    calculate_px_raduis = ()=>{
+
+        return (this.state.risk_radius* Math.pow(2,this.state.viewport.zoom)) / 33.74
+    }
+
     send_all = ()=>{
         let actif = Number( document.querySelector("#actif").value )||0 ;
         let dead = Number(document.querySelector("#deads").value )||0;
@@ -162,30 +177,68 @@ class NewZone extends React.Component{
             .then(response => response.json())
             .then(result => {
 
+                if(this.state.show_risk){
 
-                    let _id = result.content.zoneId ;
+                    let _id = result.content.zoneId;
+                    let diametre = Number( this.state.risk_radius );
+                    let cause = document.querySelector("#cause").value || ""
+
+
                     console.log(_id)
-                    let myHeaders2 = new Headers();
-                    myHeaders2.append("Authorization", "Bearer "+localStorage.getItem("token"));
-                    myHeaders2.append("Content-Type", "application/json");
+                    let raw4 = JSON.stringify({
+                        "totalPorteur": 0,
+                        "totalSustects": suspect,
+                        "totalConfirmed": confirmed,
+                        "totalDead": dead,
+                        "totalRecovered": gueris,
+                        "dailyDeaths": 0,
+                        "totalActive": actif,
+                        "totalCritical": critic,
+                        "zoneZoneId": _id
+                    });
 
-                    let raw4 = JSON.stringify({"totalPorteur":0,"totalSustects":suspect,"totalConfirmed":confirmed,"totalDead":dead,"totalRecovered":gueris,"dailyDeaths":0,"totalActive":actif,"totalCritical":critic,"zoneZoneId":_id});
+                    Promise.all([insert_zone_risque_only(localStorage.getItem("token"),_id,diametre,cause,1),insert_zone_data(localStorage.getItem("token"), _id, raw4),
+                        ])
 
-                    let requestOptions1 = {
-                        method: 'POST',
-                        headers: myHeaders,
-                        body: raw4,
-                        redirect: 'follow'
-                    };
+                        .then((res)=>{console.log(res)
 
-                    fetch(IP+"/api/v0/dataZone", requestOptions1)
-                        .then(response3 => response3.json())
-                        .then(result2 =>{console.log(result2) ;
                             this.props.synchronize_data(localStorage.getItem("token"))
-                            window.location.pathname ='/'
+                            window.location.pathname = '/'
 
-                        })
-                        .catch(error2 => console.log('error', error2));
+                        }).catch((err)=>{console.log(err)})
+
+                  //  insert_zone_data(localStorage.getItem("token"), _id, raw4)
+                   /* insert_zone_risque_only(localStorage.getItem("token"),_id,diametre,cause,1).then((result)=>result.json()).then((data)=>{
+
+                    }).catch((r)=>{console.log(r)})*/
+
+
+
+
+
+                }else {
+                    let _id = result.content.zoneId;
+                    console.log(_id)
+                    let raw4 = JSON.stringify({
+                        "totalPorteur": 0,
+                        "totalSustects": suspect,
+                        "totalConfirmed": confirmed,
+                        "totalDead": dead,
+                        "totalRecovered": gueris,
+                        "dailyDeaths": 0,
+                        "totalActive": actif,
+                        "totalCritical": critic,
+                        "zoneZoneId": _id
+                    });
+                    insert_zone_data(localStorage.getItem("token"), _id, raw4).then((result) => {
+                        console.log(result)
+                        this.props.synchronize_data(localStorage.getItem("token"))
+                        window.location.pathname = '/'
+
+                    }).catch((er) => {
+                        console.log(er)
+                    })
+                }
 
                 }
 
@@ -208,7 +261,7 @@ class NewZone extends React.Component{
                     <h3 className={"title_zone_new"} style={{padding:"20px"}}> Renseignement et bilan provisoire : </h3>
 
 
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
+                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
                         <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
                             <div className={"label_new col-xs-8"}> Total Cas Confirmés:</div>
                             <div className={"col-xs-4"}> <input id={"confirmed"} defaultValue={0} type={"number"} className={"my_text_box_v6"}/> </div>
@@ -216,7 +269,7 @@ class NewZone extends React.Component{
                     </div>
 
 
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
+                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
                         <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
                             <div className={"label_new col-xs-8"}> Total Cas Actifs:</div>
                             <div className={"col-xs-4"}> <input id={"actif"} defaultValue={0} type={"number"} className={"my_text_box_v6"}/> </div>
@@ -224,7 +277,7 @@ class NewZone extends React.Component{
                     </div>
 
 
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
+                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
                         <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
                             <div className={"label_new col-xs-8"}> Total Décès:</div>
                             <div className={"col-xs-4"}> <input id={"deads"} defaultValue={0} type={"number"} className={"my_text_box_v6"}/> </div>
@@ -232,7 +285,7 @@ class NewZone extends React.Component{
                     </div>
 
 
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
+                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
                         <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
                             <div className={"label_new col-xs-8"}> Total Guéris:</div>
                             <div className={"col-xs-4"}> <input id={"gueris"} defaultValue={0} type={"number"} className={"my_text_box_v6"}/> </div>
@@ -240,11 +293,47 @@ class NewZone extends React.Component{
                     </div>
 
 
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}> <h3 className={"title_zone_new"}>Informations complémentaires</h3> </div>
+                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}> <h3 className={"title_zone_new"}>Informations Zone Risque correspandante</h3> </div>
+
+
+                    <div className={"col-xs-12"} style={{fontSize:"140%"}}>
+                        <input type={"checkbox"} name={"rd2"} checked={this.state.show_risk} onChange={(e)=>{
+                            this.setState({show_risk:e.target.checked})
+                        }} /><label style={{fontFamily:"Exo",fontWeight:"lighter",color:"#002184"}} className={"label label_v1"} htmlFor={"rd2"}>La Zone est Risquée</label>
+                    </div>
 
 
 
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
+                    {this.state.show_risk&&<div className={"col-xs-12 zero_pad"}>
+                                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
+                                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
+                                            <div className={"label_new col-xs-8"}> Le diamètre (km) de la zone:</div>
+                                            <div className={"col-xs-4"}> <input id={"raduis"} value={this.state.risk_radius}
+                                                                                onChange={(e)=>{
+                                                                                    if(e.target.value>0)
+                                                                                        this.setState({risk_radius:e.target.value})
+                                                                                }}
+                                                                                type={"number"} className={"my_text_box_v6"}/> </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
+                                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
+
+                                            <div className={"label_new col-xs-4"}> La cause du danger:</div>
+                                            <div className={"col-xs-8"}> <textarea id={"cause"} style={{height:"100px",fontWeight:"lighter",textAlign:"left"}} rows={5} placeholder={" la cause "} className={"my_text_box_v6"}/> </div>
+                                        </div>
+                                    </div>
+                    </div>}
+
+
+
+                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}> <h3 className={"title_zone_new"}>Informations complémentaires (optionnels) </h3> </div>
+
+
+
+                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
                         <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
                             <div className={"label_new col-xs-8"}> Total Cas Suspects:</div>
                             <div className={"col-xs-4"}> <input id={"suspect"} type={"number"} defaultValue={0} className={"my_text_box_v6"}/> </div>
@@ -252,7 +341,7 @@ class NewZone extends React.Component{
                     </div>
 
 
-                    <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
+                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
                         <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
                             <div className={"label_new col-xs-8"}> Total Cas critiques:</div>
                             <div className={"col-xs-4"}> <input id={"critical"} type={"number"} defaultValue={0} className={"my_text_box_v6"}/> </div>
@@ -313,7 +402,7 @@ class NewZone extends React.Component{
                             <div className={"col-xs-4"}  onClick={()=>{this.setState({show_select:!this.state.show_select})}}
                                                         onMouseLeave={()=>{this.setState({show_select:false})}} >
 
-                                    <div align={"center"}  className={"my_button_update col-xs-12"}> { this.state.free_selection ? " ZONE LIBRE " :"ZONE PAR WILAYA"} <span>&nbsp;&nbsp;</span> <span className={"glyphicon glyphicon-chevron-down"}></span></div>
+                                    <div align={"center"}  className={"my_button_update col-xs-12"}>  { this.state.free_selection ? " ZONE LIBRE " :"ZONE PAR WILAYA"} <span>&nbsp;&nbsp;</span> <span className={"glyphicon glyphicon-chevron-down"}></span></div>
 
                                 <div className={"col-xs-12 zero_pad"} style={{position:"relative",zIndex:50}}>
 
@@ -332,6 +421,7 @@ class NewZone extends React.Component{
 
 
                             </div>
+
                             <div className={"col-xs-3 label_new"}>Les Wilayas </div>
 
                             <div className={"col-xs-3 "}>
@@ -347,7 +437,7 @@ class NewZone extends React.Component{
 
                                 {
                                     data.list.sort().map((i,itr)=>{
-                                        if(this.state.excluded_cities.indexOf(i)===-1){
+                                        if((this.state.free_selection)||(this.state.excluded_cities.indexOf(i)===-1)){
                                             return <option key={itr} value={i}>{i.toString().toUpperCase()} </option>
                                         }
                                     })
@@ -409,6 +499,15 @@ class NewZone extends React.Component{
                                     }
 
                             > <span style={pinStyle} className={"glyphicon glyphicon-map-marker"}></span> </Marker>}
+
+                            {this.state.show_risk&&<Marker  {...this.state.selected_city.coords} >
+
+                                <div className={"zone"}
+
+
+                                     style={{height:this.calculate_px_raduis(this.state.risk_radius),width:this.calculate_px_raduis(this.state.risk_radius)}}> </div>
+                            </Marker>}
+
 
                         </ReactMapGL></div>
 

@@ -1,5 +1,5 @@
 
-import {GET_DZ_NOW, SET_ACTIVE_DZ_ZONE ,GET_DZ_CITIES} from "./action"
+import {GET_DZ_NOW, SET_ACTIVE_DZ_ZONE, GET_DZ_CITIES, GET_DZ_RISK, SET_VISIBLE_RISK} from "./action"
 
 
 
@@ -13,6 +13,10 @@ const init_state = {
 
         loaded_cities:false,
         zones_cities : [],
+
+        zones_risk : [] ,
+
+        display_risk:false,
 
 
         selected : {}
@@ -58,6 +62,28 @@ export function defaultReducer(state=init_state,action) {
                     ...state.dz_now,
                     loaded_cities: true,
                     zones_cities: action.payload.data
+                }
+            }
+            break
+
+        case GET_DZ_RISK:
+            state = {
+                ...state ,
+                dz_now : {
+                    ...state.dz_now ,
+                    zones_risk: action.payload.data
+                }
+            }
+            break
+
+
+
+        case SET_VISIBLE_RISK :
+            state = {
+                ...state ,
+                dz_now : {
+                    ...state.dz_now ,
+                    display_risk: action.payload
                 }
             }
             break
