@@ -21,7 +21,9 @@ const Head_sante = ({ routes }) =>{
     return <div className={"col-xs-12 zero_pad"}>
         <div className={"col-12 zero_pad menu_holder"} >
 
-            <div className={"col-xs-1"} >  <div to={"/sante"} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
+            <div className={"col-xs-1"} >  <div onClick={()=>{
+                window.location.pathname='/'
+            }} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/sante"} className={"menu_item"}> Synthèse </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/sante"} className={"menu_item"}> Statistiques</NavLink> </div>
             <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/"} className={"menu_item"}> Mes Consignes </NavLink> </div>
@@ -47,10 +49,12 @@ const HEAD_REDACTION = ({ routes }) =>{
     return <div className={"col-xs-12 zero_pad"}>
         <div className={"col-12 zero_pad menu_holder"} >
 
-            <div className={"col-xs-1"} >  <div to={"/redaction"} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> TOUT LES ARTICLES </NavLink> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/"} className={"menu_item"}> MES ARTICLES</NavLink> </div>
-            <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/"} className={"menu_item"}> REDIGER </NavLink> </div>
+            <div className={"col-xs-1"} >  <div to={"/"} onClick={()=>{
+                window.location.pathname='/'
+            }} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/redaction"} className={"menu_item"}> TOUT LES ARTICLES </NavLink> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/redaction"} className={"menu_item"}> MES ARTICLES</NavLink> </div>
+            <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/redaction"} className={"menu_item"}> REDIGER </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/sante/redaction"} className={"menu_item"}> Profil </NavLink> </div>
         </div>
 

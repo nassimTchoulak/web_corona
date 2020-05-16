@@ -24,8 +24,8 @@ const Login_Redacteur = ()=>{
 
         <div className={"col-xs-12"} style={{paddingTop:"50px"}}>
 
-            <div className={"col-xs-offset-1 col-xs-3"}>
-                <img id={'login_logo'} src={IP+"/api/v0/assets/logo.png"} width={"200px"} />
+            <div className={"col-xs-offset-1 col-xs-3"} >
+                <img id={'login_logo'} style={{backgroundColor:"snow",borderRadius:"50%"}} src={IP+"/api/v0/assets/logo_vertical.png"} width={"200px"} />
             </div>
 
             <div className={" col-xs-7 login_start"}>
@@ -71,7 +71,7 @@ const Login_Redacteur = ()=>{
 
                                         localStorage.setItem("re_token",data.token)
                                         localStorage.setItem("re_email",data.user.email)
-                                        localStorage.setItem("re_id",data.user.email)
+                                        localStorage.setItem("re_id",data.user.id)
 
                                         window.location.reload()
                                     }

@@ -72,10 +72,12 @@ a.my_button_update a:hover{
     background-color: transparent;
     color: #0a090e;
     width: 100%;
+    padding-left: 15px;
     outline: none;
     padding-top: 10px;
     padding-bottom: 10px;
-    font-weight: normal;
+    font-family: "Exo", "Quicksand SemiBold";
+    font-weight: lighter;
     font-size: 110%;
 }
 .my_text_box_v4:focus{

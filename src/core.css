@@ -41,8 +41,9 @@ a.menu_item:hover{
 
 .role_selection{
 
-    min-height: 100px;
+    min-height: 300px;
     background-color: #1f3d61;
+    line-height: 150%;
     color: snow;
     font-family: "Exo", "Quicksand SemiBold";
     font-weight: lighter;
@@ -51,9 +52,19 @@ a.menu_item:hover{
     box-shadow:  5px 5px 5px rgba(6, 6, 6, 0.21);
     cursor: pointer;
     padding: 20px;
-    line-height: 40px;
-}
-.role_selection:hover{
     background-image: linear-gradient(to top right,#001531,#002148);
 
+
+}
+.role_selection:hover{
+    background-color: #1f3d61;
+    background-image: linear-gradient(to top right,#1f3d61,#002148);
+
+}
+
+.first_all{
+    background-image: linear-gradient(to top right , #bac9d9,#001531);
+    height: 100vh;
+    color: snow;
+    font-family: "Exo", "Quicksand SemiBold";
 }

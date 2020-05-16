@@ -9,17 +9,17 @@ import './default_ui.css'
 const FirstAction = ()=>{
 
 
-    return <div className={"col-xs-12"}>
+    return <div className={"col-xs-12 first_all"}>
 
 
         <div className={"col-xs-12"} style={{paddingTop:"50px"}}>
 
-            <div className={"col-xs-offset-1 col-xs-3"}>
-                <img id={'login_logo'} src={IP+"/api/v0/assets/logo.png"} width={"200px"} />
+            <div className={" col-xs-5"}>
+                <img id={'login_logo'} src={IP+"/api/v0/assets/logo_horizantal.png"} width={"500px"} />
             </div>
 
             <div className={" col-xs-7 login_start"}>
-                <h1 className={"login_start"}>  Bienvenue à L'Application Algérienne dédiée aux informations liées au virus COVID-19</h1>
+                <h1 className={"login_start"} align={"left"}>  <span style={{color:"#f32039"}} className={"glyphicon glyphicon-chevron-right"}></span> Bienvenue à L'Application Algérienne dédiée aux informations liées au virus COVID-19</h1>
             </div>
         </div>
 
@@ -34,7 +34,10 @@ const FirstAction = ()=>{
                 window.location.pathname='/redaction'
             }}>
                 <h1>
-                                    SE CONNECTER EN TANT QUE REDACTEUR
+                             <div className={"col-xs-12"} style={{paddingBottom:"20px"}}>       SE CONNECTER EN TANT QUE  </div>
+                    <div className={"col-xs-12"} style={{paddingBottom:"20px"}}>        REDACTEUR </div>
+
+                    <div className={"col-xs-12"}><span style={{color:"#f32039",fontSize:"200%"}} className={"glyphicon glyphicon-pencil"}></span></div>
                 </h1>
             </div>
 
@@ -44,7 +47,11 @@ const FirstAction = ()=>{
                 window.location.pathname='/sante'
             }}>
                 <h1>
-                    SE CONNECTER EN TANT QUE AGENT DE SANTE
+                    <div className={"col-xs-12"} style={{paddingBottom:"20px"}}>       SE CONNECTER EN TANT QUE  </div>  <div className={"col-xs-12"} style={{paddingBottom:"20px"}}>  AGENT DE SANTE </div>
+
+
+
+                    <div className={"col-xs-12"}><span style={{color:"#f32039",fontSize:"200%"}} className={"glyphicon glyphicon-search"}></span></div>
                 </h1>
 
             </div>
