@@ -322,10 +322,10 @@ class Redaction extends React.Component {
 
                             let vid =""
                             if(this.state.image.url!==""){
-                                vid = IP + this.state.image.url ;
+                                vid = IP + "/"+this.state.image.url ;
                             }
                             let rraw45 = JSON.stringify({item:{titre:title,sous_titre:sous_titre,contenu:markdown,
-                                    imageUrl:IP+this.state.image.url,videoUrl:vid,redacteurRedacteurId:Number(localStorage.getItem("re_id"))},
+                                    imageUrl:IP+"/"+this.state.image.url,videoUrl:vid,redacteurRedacteurId:Number(localStorage.getItem("re_id"))},
 
                                 newTags:this.state.selected_tags});
                             console.log(rraw45)
@@ -339,7 +339,12 @@ class Redaction extends React.Component {
 
                             fetch(IP+"/api/v0/article/", requestOptionsZ)
                                 .then(respons => respons.json())
-                                .then(result45 => console.log(result45))
+                                .then(result45 => {
+
+                                    if(result45.message==="success"){
+                                        window.location.pathname = "/redaction/preview/"+result45.created.articleId ;
+                                    }
+                                })
                                 .catch(error => console.log('error', error));
 
                         }

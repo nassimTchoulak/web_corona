@@ -11,6 +11,7 @@ import TestRedaction from "./agent/TestRedaction";
 import Login_Redacteur from "./redacteur/Login_Redacteur";
 import Redaction from "./redacteur/Redaction";
 import FirstAction from "./FirstAction";
+import ArticleView from "./redacteur/ArticleView";
 
 const Head_sante = ({ routes }) =>{
 
@@ -130,7 +131,14 @@ const routes = [
                 exact: true ,
                 component: Redaction
 
-             }
+             } ,
+
+            {
+                path: "/redaction/preview/:id",
+                exact: true ,
+                component: ArticleView
+
+            }
         ]
     }
 ];

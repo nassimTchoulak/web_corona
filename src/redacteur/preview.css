@@ -1,0 +1,23 @@
+
+.profile_info{
+    font-size: 120%;
+    font-weight: normal;
+    font-family: Exo;
+    color: #001531;
+}
+
+.profile_zone{
+    background-image: linear-gradient(to  right , #ffffff , #ecf4fd);
+}
+.profile_element{
+    font-size: 130%;
+    padding-top: 10px;
+    text-align: left;
+    font-family: Quicksand;
+    font-weight: bold;
+}
+
+.profile_decale{
+    padding-left: 30px;
+    font-size: 110%;
+}
