@@ -55,7 +55,7 @@ class ArticleView extends React.Component{
 
                 <h3 className={"title_zone_new col-xs-offset-2 col-xs-8"}>Les Tags : {
                     this.state.data.tags.map((i,itr)=>{
-                        return <span style={{color:"#5890ff",padding:"15px"}} key={"itr"}>#{i.description}</span>
+                        return <span style={{color:"#5890ff",padding:"15px"}} key={itr}>#{i.description}</span>
                     })
                 } </h3>
 
@@ -75,7 +75,7 @@ class ArticleView extends React.Component{
                             (this.state.data.videoUrl!=="")&&<div className={"col-xs-12"}>
                                 <h4 className={"label_new"} style={{padding:"20px"}}> Video de l'article </h4>
 
-                                <video width="100%" >
+                                <video width="100%" controls>
                                     <source placeholder={"video"} src={this.state.data.videoUrl} type="video/mp4" />
                                 </video>
 

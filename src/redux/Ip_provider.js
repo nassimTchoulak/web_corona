@@ -1,7 +1,7 @@
 
-const IP = "http://localhost:8080"
+//const IP = "http://localhost:8080"
 
-//const IP ="https://coronawatch-api-v0.herokuapp.com"
+const IP ="https://coronawatch-api-v0.herokuapp.com"
 
 export default IP
 

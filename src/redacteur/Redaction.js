@@ -321,8 +321,8 @@ class Redaction extends React.Component {
 
 
                             let vid =""
-                            if(this.state.image.url!==""){
-                                vid = IP + "/"+this.state.image.url ;
+                            if(this.state.video.url!==""){
+                                vid = IP + "/"+this.state.video.url ;
                             }
                             let rraw45 = JSON.stringify({item:{titre:title,sous_titre:sous_titre,contenu:markdown,
                                     imageUrl:IP+"/"+this.state.image.url,videoUrl:vid,redacteurRedacteurId:Number(localStorage.getItem("re_id"))},
