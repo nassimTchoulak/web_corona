@@ -9,7 +9,7 @@ import IP from "../redux/Ip_provider";
 const IP2 = "http://localhost:8080"
 
 
-const Login_Redacteur = ()=>{
+const Login_moderateur = ()=>{
 
     const[err,setErr] = useState(false);
 
@@ -34,7 +34,7 @@ const Login_Redacteur = ()=>{
         </div>
 
         <div className={"col-xs-offset-2 col-xs-8"}>
-            <h2> Portaille dédiée REDACTEURS du Ministère de la Santé </h2>
+            <h2> Portaille dédiée aux modérateurs du Ministère de la Santé </h2>
         </div>
 
 
@@ -64,15 +64,13 @@ const Login_Redacteur = ()=>{
                         redirect: 'follow'
                     };
 
-                    fetch(IP+"/api/v0/auth/authRedacteur/local/login", requestOptions)
+                    fetch(IP+"/api/v0/auth/authModerateur/local/login", requestOptions)
                         .then(result =>{
                                 result.json().then((data)=>{
                                     if(data.auth){
 
-                                        localStorage.setItem("re_token",data.token)
-                                        localStorage.setItem("re_email",data.user.email)
-                                        localStorage.setItem("re_id",data.user.id)
-                                        localStorage.setItem("re_all",JSON.stringify(data.user))
+                                        localStorage.setItem("mo_token",data.token)
+                                        localStorage.setItem("mo_email",data.user.email)
 
                                         window.location.reload()
                                     }
@@ -102,4 +100,4 @@ const Login_Redacteur = ()=>{
 }
 
 
-export  default Login_Redacteur
+export  default Login_moderateur

@@ -1,0 +1,52 @@
+.side_article_validation{
+    padding-top: 40px;
+    text-align: left;
+    padding-left: 40px;
+}
+
+
+
+.my_button_validate_article,a.my_button_validate_article {
+    border-radius: 3px 3px;
+    outline: none;
+    color: #006442;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #ffffff;
+    font-weight: lighter;
+    font-family: "Quicksand" ;
+    border: solid 0.4mm #006442;
+    font-size: 1.5em;
+    width: 80%;
+    margin-left: 10%;
+    display: block;
+}
+
+.my_button_validate_article:hover{
+    background-color: rgba(135, 211, 124, 0.13);
+}
+
+
+.my_button_reject_article,a.my_button_reject_article {
+    border-radius: 3px 3px;
+    outline: none;
+    color: #C3272B;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #ffffff;
+    font-weight: lighter;
+    font-family: "Quicksand" ;
+    border: solid 0.4mm #C3272B;
+    font-size: 1.5em;
+    width: 80%;
+    margin-left: 10%;
+    display: block;
+}
+
+.my_button_reject_article:hover{
+    background-color: rgba(201, 31, 55, 0.09);
+}

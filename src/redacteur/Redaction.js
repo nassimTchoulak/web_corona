@@ -95,6 +95,7 @@ class Redaction extends React.Component {
                 .then(respons => respons.json())
                 .then(result45 => {
 
+                    console.log(result45)
                     if(result45.message==="success"){
                         window.location.pathname = "/redaction/preview/"+result45.created.articleId ;
                     }
@@ -190,7 +191,7 @@ class Redaction extends React.Component {
 
                                         <div className={"col-xs-12"} style={{paddingTop:"10px",paddingBottom:"10px"}}>
                                             <div className={"label_new col-xs-4"}> Sous-titre</div>
-                                            <div className={"col-xs-8"}> <textarea id={"sous_titre"} style={{height:"100px",fontWeight:"lighter",textAlign:"left"}} rows={5} placeholder={" sous-titre & petite description "} className={"my_text_box_v6"}/> </div>
+                                            <div className={"col-xs-8"}> <textarea id={"sous_titre"} maxLength={254} style={{height:"100px",fontWeight:"lighter",textAlign:"left"}} rows={5} placeholder={" sous-titre & petite description "} className={"my_text_box_v6"}/> </div>
                                         </div>
 
 

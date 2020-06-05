@@ -13,6 +13,11 @@ import Redaction from "./redacteur/Redaction";
 import FirstAction from "./FirstAction";
 import ArticleView from "./redacteur/ArticleView";
 import Accepted_articles from "./redacteur/Accepted_articles";
+import Submitted_articles_mod from "./moderateur/Submitted_articles_mod";
+import Login_moderateur from "./moderateur/Login_moderateur";
+import Waiting_Articles from "./moderateur/Waiting_Articles";
+import Rejected_Article from "./moderateur/Rejected_Articles";
+import My_redaction from "./redacteur/My_redaction";
 
 const Head_sante = ({ routes }) =>{
 
@@ -25,7 +30,7 @@ const Head_sante = ({ routes }) =>{
 
             <div className={"col-xs-1"} >  <div onClick={()=>{
                 window.location.pathname='/'
-            }} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
+            }} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} className={"image_logo"}  /> </div> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/sante"} className={"menu_item"}> Synthèse </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/sante"} className={"menu_item"}> Statistiques</NavLink> </div>
             <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/"} className={"menu_item"}> Mes Consignes </NavLink> </div>
@@ -53,9 +58,9 @@ const HEAD_REDACTION = ({ routes }) =>{
 
             <div className={"col-xs-1"} >  <div to={"/"} onClick={()=>{
                 window.location.pathname='/'
-            }} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
+            }} className={"menu_item "}> <img className={"image_logo"} src={IP+"/api/v0/assets/logo.png"}  /> </div> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/redaction/published"} className={"menu_item"}> TOUT LES ARTICLES </NavLink> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/redaction"} className={"menu_item"}> MES ARTICLES</NavLink> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/redaction/my_redaction"} className={"menu_item"}> MES ARTICLES</NavLink> </div>
             <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/redaction"} className={"menu_item"}> REDIGER </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/sante/redaction"} className={"menu_item"}> Profil </NavLink> </div>
         </div>
@@ -68,6 +73,31 @@ const HEAD_REDACTION = ({ routes }) =>{
     </div>
 }
 
+const HEAD_moderateur = ({routes}) =>{
+    if(localStorage.getItem("mo_token")===null){
+        return <Login_moderateur />
+    }
+
+
+    return <div className={"col-xs-12 zero_pad"}>
+
+        <div className={"col-xs-2  menu_mod"}>
+            <div className={"col-xs-12"} >  <div to={"/"} onClick={()=>{
+                window.location.pathname='/'
+            }} className={"menu_item"} style={{paddingTop:"0px !important"}} > <img className={"image_logo_redaction"} src={IP+"/api/v0/assets/logo_horizantal.png"} /> </div> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>  LES ARTICLES</NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> MES ARTICLES </NavLink> </div>
+        </div>
+        <div className={"col-xs-10 zero_pad"}>
+            <div className={"col-xs-12 zero_pad"} style={{"backgroundColor":"white"}}>
+                {routes.map((route, i) => (
+                    <RouteWithSubRoutes key={i} {...route} />
+                ))}
+            </div>
+        </div>
+
+    </div>
+}
 
 
 
@@ -145,8 +175,37 @@ const routes = [
                 path:"/redaction/published",
                 exact: true ,
                 component: Accepted_articles
+            },
+            ,
+            {
+                path:"/redaction/my_redaction",
+                exact: true ,
+                component: My_redaction
             }
         ]
+    } ,
+    {
+        path: "/moderateur",
+        component:HEAD_moderateur,
+        exact: false,
+        routes : [
+            {
+                path:"/moderateur/articles/accepted",
+                exact: true ,
+                component: Submitted_articles_mod
+            } ,
+            {
+                path:"/moderateur/articles/submitted",
+                exact: true ,
+                component: Waiting_Articles
+            },
+            {
+                path:"/moderateur/articles/rejected",
+                exact: true ,
+                component: Rejected_Article
+            }
+        ]
+
     }
 ];
 

@@ -74,7 +74,7 @@ class Synthse extends React.Component{
             <div className={"col-xs-12"} style={{padding:"30px"}}>
 
                 <div className={"col-xs-12 main_holder"}
-                     style={{borderRadius:"10px 10px",backgroundImage:"url('http://localhost:8080/api/v0/assets/back.jpg')",backgroundSize:"cover", backgroundPositionY:"50%",minHeight:"200px"}}>
+                     style={{borderRadius:"10px 10px",backgroundImage:"url('"+IP+"/api/v0/assets/back.jpg')",backgroundSize:"cover", backgroundPositionY:"50%",minHeight:"200px"}}>
 
                     <div className={"col-xs-4"}>
                         <h1 className={"synth_title"}>

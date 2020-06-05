@@ -3,6 +3,7 @@ import './displayed_article.css'
 import 'bootstrap/dist/css/bootstrap-theme.min.css'
 import {color_from_string, parser_diff_comment} from "../http_requests/dataCalcule";
 import IP from "../redux/Ip_provider";
+import ReactMarkdown from "react-markdown";
 
 class Displayed_article extends React.Component{
 
@@ -38,7 +39,7 @@ class Displayed_article extends React.Component{
             return this.redacteur.username
         }
 
-        return this.redacteur.email
+        return this.redacteur.email.substring(0,6)
 
     }
 
@@ -63,6 +64,16 @@ class Displayed_article extends React.Component{
             })
             .catch(error => console.log('error', error));
 
+
+
+        fetch(IP+"/api/v0/CommentArticle/article/"+this.articleId, requestptions)
+            .then(response => response.json())
+            .then(result => { this.setState({comments:result.items.rows})
+                console.log(result.items.rows)
+
+            })
+            .catch(error => console.log('error', error));
+
     }
 
     render(){
@@ -80,7 +91,7 @@ class Displayed_article extends React.Component{
                     </div>
 
             <div className="col-xs-5">
-                <img width={"100%"} src={this.imageUrl} />
+                <img width={"auto"} height={"200px"} src={this.imageUrl} />
             </div>
 
             <div className={"col-xs-4 zero_pad"} style={{display:"inline"}}>
@@ -141,7 +152,87 @@ class Displayed_article extends React.Component{
                 this.setState({detail:false})
             }} >
 
-                <div className={"article_detail_body"} >  hello world  </div>
+                <div className={"article_detail_body"} >
+
+
+                                    <div className={"col-xs-12 zero_pad"}>
+
+
+                                        <div className={"col-xs-9"} align={"left"}>
+
+                                            <h2 className={"title_zone_new col-xs-offset-2 col-xs-8"}>  <span style={{color:"#ff4275"}} className={"glyphicon glyphicon-chevron-right"}></span>  <span style={{fontWeight:"bold"}}> {this.titre }</span> </h2>
+
+
+                                            <div className={"col-xs-12 zero_pad"} style={{paddingTop:"20px"}}>
+                                                <div className={"col-xs-5"}>
+                                                    <h4 className={"label_new"}> Image de Couverture </h4>
+
+                                                    {
+                                                        <img width={"auto"} height={"250px"} src={this.imageUrl} />
+                                                    }
+
+                                                    {
+                                                        (this.state.videoUrl==="")&&<div className={"col-xs-12"}>Pas de video inclus </div>
+                                                    }
+
+                                                    {
+                                                        (this.state.videoUrl!=="")&&<div className={"col-xs-12"}>
+                                                            <h4 className={"label_new"}> Video de l'article </h4>
+
+                                                            <video width="100%" controls>
+                                                                <source placeholder={"video"} src={this.state.videoUrl} type="video/mp4" />
+                                                            </video>
+
+
+                                                        </div>
+                                                    }
+
+                                                </div>
+
+                                                <div  className={"col-xs-7"}>
+
+                                                    <h4 className={"label_new"} > Contenu de l'Article </h4>
+
+                                                    <div className={"col-xs-12"} style={{border:"solid 1px #002148",overflow:"scroll" , height:"60vh"}}> <ReactMarkdown source={this.state.contenu} /> </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div className={"col-xs-3 "}>
+
+
+
+                                            <div className={"col-xs-12"} style={{paddingTop:"20px",textAlign:"left"}}>
+                                                <div className={"col-xs-12"}> Nombre de Vues : {this.popularite}</div>
+
+                                                <h3 className={"label_new"} style={{paddingTop:"40px"}}>Les commentaires</h3>
+
+                                                <div className={"col-xs-12 zero_pad"}>
+                                                    {
+                                                        this.state.comments.map((i,itr)=>{
+                                                            return <div className={"col-xs-12 zero_pad"} align={"left"} style={{marginTop:"20px",backgroundColor:"#f2f2f3",padding:"5px"}} key={itr}>
+
+                                                                    <div className={"col-xs-12 mail_time zero_pad"} align={"left"}>
+                                                                        <div className={"comment_mail col-xs-8 zero_pad"}><span className={"glyphicon glyphicon-chevron-right zero_pad_v2"}></span><div className={"zero_pad_v2"}>{" "+i.utilisateur.username}</div></div>
+                                                                        <div className={"comment_time col-sx-4 zero_pad"}>+{parser_diff_comment(i.createdAt)}</div>
+                                                                    </div>
+
+                                                                    <div className={"col-xs-12 comment_txt zero_pad"}>{i.contenu}</div>
+
+                                                            </div>
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
 
 
 

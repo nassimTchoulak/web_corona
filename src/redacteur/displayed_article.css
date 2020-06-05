@@ -50,8 +50,38 @@
     font-size: 150%;
     padding: 30px;
 
-    height: 30vh;
-    width: 50vw;
-    margin-top: 30vh;
-    margin-left: 25vw;
+    height: 80vh;
+    width: 90vw;
+    margin-top: 10vh;
+    margin-left: 5vw;
+}
+
+
+.comment_mail{
+    text-align: left;
+    font-weight: normal;
+    font-size: 80%;
+    color: #261326;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: no-display;
+}
+.comment_txt{
+    text-align: left;
+    font-weight: lighter;
+    font-size: 70%;
+
+    color: #2e3131;
+    border-radius: 3px 3px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.comment_time{
+    text-align: right;
+    font-weight: lighter;
+    font-size: 60%;
+}
+.mail_time{
+    display: flex;
+    flex-wrap: wrap;
 }
