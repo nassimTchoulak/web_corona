@@ -12,6 +12,7 @@ import Login_Redacteur from "./redacteur/Login_Redacteur";
 import Redaction from "./redacteur/Redaction";
 import FirstAction from "./FirstAction";
 import ArticleView from "./redacteur/ArticleView";
+import Accepted_articles from "./redacteur/Accepted_articles";
 
 const Head_sante = ({ routes }) =>{
 
@@ -53,7 +54,7 @@ const HEAD_REDACTION = ({ routes }) =>{
             <div className={"col-xs-1"} >  <div to={"/"} onClick={()=>{
                 window.location.pathname='/'
             }} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} width={"40px"} height={"40px"} /> </div> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/redaction"} className={"menu_item"}> TOUT LES ARTICLES </NavLink> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/redaction/published"} className={"menu_item"}> TOUT LES ARTICLES </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/redaction"} className={"menu_item"}> MES ARTICLES</NavLink> </div>
             <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/redaction"} className={"menu_item"}> REDIGER </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/sante/redaction"} className={"menu_item"}> Profil </NavLink> </div>
@@ -138,6 +139,12 @@ const routes = [
                 exact: true ,
                 component: ArticleView
 
+            }
+            ,
+            {
+                path:"/redaction/published",
+                exact: true ,
+                component: Accepted_articles
             }
         ]
     }

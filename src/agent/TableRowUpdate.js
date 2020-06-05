@@ -152,7 +152,7 @@ const TableRowUpdate = (props) =>{ //props.data
                 },1000)
             }
         }
-        } className={"my_button_update"} >update</div> </td>
+        } className={"my_button_deep_blue"} >update</div> </td>
 
 
     </tr>

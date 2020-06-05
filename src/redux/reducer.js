@@ -1,5 +1,13 @@
 
-import {GET_DZ_NOW, SET_ACTIVE_DZ_ZONE, GET_DZ_CITIES, GET_DZ_RISK, SET_VISIBLE_RISK, SET_UPDATE_ZONE} from "./action"
+import {
+    GET_DZ_NOW,
+    SET_ACTIVE_DZ_ZONE,
+    GET_DZ_CITIES,
+    GET_DZ_RISK,
+    SET_VISIBLE_RISK,
+    SET_UPDATE_ZONE,
+    GET_ARTICLES_ACCEPTED_BY_PAGE, DISALLOW_ARTICLE_PAGE
+} from "./action"
 
 
 
@@ -24,6 +32,14 @@ const init_state = {
 
         selected_for_update:{}//used in update window
     },
+
+
+    articles : {
+        accepted : [],
+        allow_update : true ,
+        page : 1 ,
+
+    }
 
 }
 
@@ -99,7 +115,44 @@ export function defaultReducer(state=init_state,action) {
                     selected_for_update: action.payload
                 }
             }
+            break;
+        case GET_ARTICLES_ACCEPTED_BY_PAGE:
+
+            let ls = action.payload.new_added ;
+            let current_page = action.payload.current_page ;
+
+            if(ls.length>0){
+                state = {
+                    ...state ,
+                    articles: {
+                        ...state.articles ,
+                        allow_update: true ,
+                        accepted: [...state.articles.accepted,...ls] ,
+                        page : current_page+1
+
+                    }
+                }
+            }
+            else{
+                state = {
+                    ...state ,
+                    articles: {
+                        ...state.articles ,
+                        allow_update: false
+
+                    }
+                }
+            }
+
             break
+
+        case DISALLOW_ARTICLE_PAGE:
+            state = {
+                ...state , articles: {...state.articles , allow_update: false}
+            }
+
+            break
+
 
         default:
 

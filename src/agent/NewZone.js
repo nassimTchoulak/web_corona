@@ -402,7 +402,7 @@ class NewZone extends React.Component{
                             <div className={"col-xs-4"}  onClick={()=>{this.setState({show_select:!this.state.show_select})}}
                                                         onMouseLeave={()=>{this.setState({show_select:false})}} >
 
-                                    <div align={"center"}  className={"my_button_update col-xs-12"}>  { this.state.free_selection ? " ZONE LIBRE " :"ZONE PAR WILAYA"} <span>&nbsp;&nbsp;</span> <span className={"glyphicon glyphicon-chevron-down"}></span></div>
+                                    <div align={"center"}  className={"my_button_deep_blue col-xs-12"}>  { this.state.free_selection ? " ZONE LIBRE " :"ZONE PAR WILAYA"} <span>&nbsp;&nbsp;</span> <span className={"glyphicon glyphicon-chevron-down"}></span></div>
 
                                 <div className={"col-xs-12 zero_pad"} style={{position:"relative",zIndex:50}}>
 
@@ -426,7 +426,7 @@ class NewZone extends React.Component{
 
                             <div className={"col-xs-3 "}>
 
-                                <select style={{textAlign:"center",backgroundColor:"#f3f4f6",color:"#002148",fontWeight:"bold"}} className={"my_button_update"} value={this.state.selected_city.name} onChange={(e)=>{
+                                <select style={{textAlign:"center",backgroundColor:"#f3f4f6",color:"#002148",fontWeight:"bold"}} className={"my_button_deep_blue"} value={this.state.selected_city.name} onChange={(e)=>{
                                 this.setState({selected_city:{
                                         name:e.target.value ,
                                         selected : true ,
@@ -449,7 +449,7 @@ class NewZone extends React.Component{
                                 <div className={"col-xs-12"} style={{marginTop:"30px",minHeight:"40px"}}>
                                     {this.state.free_selection&&<div className={"col-xs-12"}>
 
-                                        <div className={" col-xs-5"}><input type={"button"} onClick={this.search_by_coords} className={"my_button_update"} value={"IDENTIFIER LA ZONE POINTE"} /> </div>
+                                        <div className={" col-xs-5"}><input type={"button"} onClick={this.search_by_coords} className={"my_button_deep_blue"} value={"IDENTIFIER LA ZONE POINTE"} /> </div>
 
                                         <div className={" col-xs-7"} style={{fontSize:"140%",fontWeight:"bold",fontFamily:"Quicksand",color:"#002148"}}>
                                             <span style={{color:"#ff4275"}} className={"glyphicon glyphicon-chevron-right"}></span> {(()=>{

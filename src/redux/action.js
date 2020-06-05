@@ -12,6 +12,9 @@ export const SET_VISIBLE_RISK = 'SET_VISIBLE_RISK'
 
 export const SET_UPDATE_ZONE = 'SET_UPDATE_ZONE'
 
+export const GET_ARTICLES_ACCEPTED_BY_PAGE = 'GET_ALL_ARTICLES_ACCEPTED_BY_PAGE' // by page
+
+export const DISALLOW_ARTICLE_PAGE = 'DIS_ALLOW_PAGE'
 
 export function set_displayed_update_zone(obj){
     return {type:SET_UPDATE_ZONE , payload:obj}
@@ -30,6 +33,9 @@ export function set_visible_zones_risk(bool){
     return {type : SET_VISIBLE_RISK , payload : bool}
 }
 
+export function disallow_article_update(){
+    return { type :DISALLOW_ARTICLE_PAGE}
+}
 
 
 export function synchronize_data(token) {
@@ -103,7 +109,11 @@ export function get_data_dz_cities_now(token){
 
                 })})
 
-            .catch(error => console.log('error', error));
+            .catch(error => {console.log('error', error)
+
+                dispatch( {type:GET_DZ_CITIES , payload :{ data : []  }})
+
+            });
     }
 }
 
@@ -138,5 +148,25 @@ export function get_zones_risques_all(token){
             })
             .catch(error => console.log('error', error));
 
+    }
+}
+
+export function get_article_accepted_by_page(page) {
+    return (dispatch) => {
+        let requestptions = {
+            method: 'GET',
+            redirect: 'manual'
+        };
+
+        fetch(IP + "/api/v0/article/pages/" + page, requestptions)
+            .then(response => response.json())
+            .then(result => {
+
+                dispatch({type:GET_ARTICLES_ACCEPTED_BY_PAGE , payload : {current_page:page , new_added: result.rows} })
+
+
+                console.log(result)
+            })
+            .catch(error => console.log('error', error));
     }
 }

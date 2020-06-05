@@ -7,6 +7,9 @@ import  ReactDOM from 'react-dom'
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 import { stateToMarkdown } from "draft-js-export-markdown";
+
+import Confirmation from "../reusable/Confirmation";
+
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 import './redaction.css'
@@ -33,7 +36,9 @@ class Redaction extends React.Component {
             } ,
             all_tags:[],
             selected_tags:[],
-            error:false
+            error:false ,
+
+            visible_confirmation:false
 
         };
 
@@ -49,6 +54,57 @@ class Redaction extends React.Component {
         this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
     }
 
+
+
+    publish_article = ()=>{
+
+        let title = document.querySelector("#titre").value ;
+        let sous_titre = document.querySelector("#sous_titre").value ;
+
+        if((!this.state.image.ready)||(title.length===0)||(sous_titre.length===0)){
+            this.setState({error:true})
+        }
+        else{
+            let  markdown = stateToMarkdown(
+                this.state.editorState.getCurrentContent()
+            )
+
+            let ZmyHeadersZ = new Headers();
+            ZmyHeadersZ.append("Content-Type", "application/json");
+            ZmyHeadersZ.append("Authorization", "Bearer "+localStorage.getItem("re_token"));
+
+
+            let vid =""
+            if(this.state.video.url!==""){
+                vid = IP + "/"+this.state.video.url ;
+            }
+            let rraw45 = JSON.stringify({item:{titre:title,sous_titre:sous_titre,contenu:markdown,status:"SUBMITTED",
+                    imageUrl:IP+"/"+this.state.image.url,videoUrl:vid,redacteurRedacteurId:Number(localStorage.getItem("re_id"))},
+
+                newTags:this.state.selected_tags});
+            console.log(rraw45)
+
+            let requestOptionsZ = {
+                method: 'POST',
+                headers: ZmyHeadersZ,
+                body: rraw45,
+                redirect: 'manual'
+            };
+
+            fetch(IP+"/api/v0/article/", requestOptionsZ)
+                .then(respons => respons.json())
+                .then(result45 => {
+
+                    if(result45.message==="success"){
+                        window.location.pathname = "/redaction/preview/"+result45.created.articleId ;
+                    }
+                })
+                .catch(error => console.log('error', error));
+
+        }
+
+
+    }
 
     componentDidMount() {
         let myHeaders = new Headers();
@@ -192,11 +248,11 @@ class Redaction extends React.Component {
                                         <div className={"col-xs-6"} style={{padding:"10px"}}>
 
 
-                                            <div className={"col-xs-6"}><button type={"button"} className={"my_button_update"} value={"CHOISIR UNE VIDEO (option) "} onClick={()=>{
+                                            <div className={"col-xs-6"}><button type={"button"} className={"my_button_deep_blue"} value={"CHOISIR UNE VIDEO (option) "} onClick={()=>{
                                                 document.querySelector("#video").click()
                                             }} >CHOISIR UNE VIDEO <span className={"glyphicon glyphicon-facetime-video"}></span> (op)</button> </div>
 
-                                            <div className={"col-xs-6"}> <button  className={"my_button_update "} value={"CHOISIR UNE IMAGE "} onClick={()=>{
+                                            <div className={"col-xs-6"}> <button  className={"my_button_deep_blue "} value={"CHOISIR UNE IMAGE "} onClick={()=>{
                                                 document.querySelector("#image").click()
                                             }}>CHOISIR UNE IMAGE <span className={"glyphicon glyphicon-picture"}></span></button> </div>
 
@@ -249,13 +305,13 @@ class Redaction extends React.Component {
                                 />
                                 <div className={className} style={{position:"relative",minHeight:"30vh"}} onClick={this.focus}>
                                     <div className={"col-xs-4"} style={{position:"absolute",top:"0px",right:"0px"}}>
-                                        <div className={"col-xs-12"} style={{backgroundColor:"black"}}>
+                                        <div className={"col-xs-12"} style={{backgroundColor:"#b0b5ba"}}>
                                         {this.state.video.ready&&<div className={"col-xs-12"}>
                                             <video width="100%" >
                                                 <source placeholder={"video"} src={IP+"/"+this.state.video.url} type="video/mp4" />
                                             </video>
                                         </div>}
-                                        {this.state.image.ready&&<div className={"col-xs-12"}> <img width={"100%"} src={IP+"/"+this.state.image.url} /> </div>}
+                                        {this.state.image.ready&&<div className={"col-xs-12"}> <img width={"100%"} style={{backgroundColor:"transparent"}} src={IP+"/"+this.state.image.url} /> </div>}
                                         </div>
 
                                     </div>
@@ -298,60 +354,24 @@ class Redaction extends React.Component {
 
                     <h6 style={{paddingTop:"20vh"}} align={"center"}>click pour ajouter à l'article</h6>
 
+
+
+
                 </div>
                 {this.state.error&&<div className={"col-xs-12"}>Error de params</div>}
 
                 <div className={"col-xs-4 col-xs-offset-4"} style={{paddingTop:"50px",paddingBottom:"50px"}}>
                     <input type={"button"}  value={" Publier l'article"}  className={"create_button"} onClick={()=>{
 
-                        let title = document.querySelector("#titre").value ;
-                        let sous_titre = document.querySelector("#sous_titre").value ;
-
-                        if((!this.state.image.ready)||(title.length===0)||(sous_titre.length===0)){
-                            this.setState({error:true})
-                        }
-                        else{
-                            let  markdown = stateToMarkdown(
-                                this.state.editorState.getCurrentContent()
-                            )
-
-                            let ZmyHeadersZ = new Headers();
-                            ZmyHeadersZ.append("Content-Type", "application/json");
-                            ZmyHeadersZ.append("Authorization", "Bearer "+localStorage.getItem("re_token"));
-
-
-                            let vid =""
-                            if(this.state.video.url!==""){
-                                vid = IP + "/"+this.state.video.url ;
-                            }
-                            let rraw45 = JSON.stringify({item:{titre:title,sous_titre:sous_titre,contenu:markdown,
-                                    imageUrl:IP+"/"+this.state.image.url,videoUrl:vid,redacteurRedacteurId:Number(localStorage.getItem("re_id"))},
-
-                                newTags:this.state.selected_tags});
-                            console.log(rraw45)
-
-                            let requestOptionsZ = {
-                                method: 'POST',
-                                headers: ZmyHeadersZ,
-                                body: rraw45,
-                                redirect: 'manual'
-                            };
-
-                            fetch(IP+"/api/v0/article/", requestOptionsZ)
-                                .then(respons => respons.json())
-                                .then(result45 => {
-
-                                    if(result45.message==="success"){
-                                        window.location.pathname = "/redaction/preview/"+result45.created.articleId ;
-                                    }
-                                })
-                                .catch(error => console.log('error', error));
-
-                        }
+                        this.setState({visible_confirmation:true})
 
 
                     }}/>
                 </div>
+
+                <Confirmation message={" Etes vous sur de vouloir publier cet article ?"} visible={this.state.visible_confirmation}
+                              hide={()=>{this.setState({visible_confirmation:false})}}
+                              execute={()=>{ this.publish_article()  }}/>
 
             </div>
         );

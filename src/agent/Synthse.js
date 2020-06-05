@@ -121,7 +121,7 @@ class Synthse extends React.Component{
                 }}
                      onMouseLeave={()=>{this.setState({show_select:false})}} >
 
-                    <div align={"center"}  className={"my_button_update col-xs-12"}>  { this.props.dz_now.display_risk ? " RISQUES " :"DONNEES"} <span>&nbsp;&nbsp;</span> <span className={"glyphicon glyphicon-chevron-down"}></span></div>
+                    <div align={"center"}  className={"my_button_deep_blue col-xs-12"}>  { this.props.dz_now.display_risk ? " RISQUES " :"DONNEES"} <span>&nbsp;&nbsp;</span> <span className={"glyphicon glyphicon-chevron-down"}></span></div>
 
                     <div className={"col-xs-12 zero_pad"} style={{position:"relative",zIndex:50}}>
 
@@ -149,7 +149,7 @@ class Synthse extends React.Component{
             <div className={"col-xs-6 list_zone_table"} >
                 <ListZones />
 
-                <div className={"col-xs-12"} style={{marginTop:"40px",fontSize:"140%"}}> <NavLink to={'/sante/new_zone'} type={"button"} className={"my_button_update"}  value={"Ajouter un nouvelle zone"}> Ajouter un nouvelle zone </NavLink> </div>
+                <div className={"col-xs-12"} style={{marginTop:"40px",fontSize:"140%"}}> <NavLink to={'/sante/new_zone'} type={"button"} className={"my_button_deep_blue"}  value={"Ajouter un nouvelle zone"}> Ajouter un nouvelle zone </NavLink> </div>
 
             </div>
 

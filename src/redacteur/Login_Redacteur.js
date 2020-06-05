@@ -6,7 +6,7 @@ import "../default_ui.css"
 import IP from "../redux/Ip_provider";
 
 
-
+const IP2 = "http://localhost:8080"
 
 
 const Login_Redacteur = ()=>{
@@ -25,7 +25,7 @@ const Login_Redacteur = ()=>{
         <div className={"col-xs-12"} style={{paddingTop:"50px"}}>
 
             <div className={"col-xs-offset-1 col-xs-3"} >
-                <img id={'login_logo'} style={{backgroundColor:"snow",borderRadius:"50%"}} src={IP+"/api/v0/assets/logo_vertical.png"} width={"200px"} />
+                <img id={'login_logo'} style={{backgroundColor:"snow",borderRadius:"50%"}} src={IP2+"/api/v0/assets/logo_vertical.png"} width={"200px"} />
             </div>
 
             <div className={" col-xs-7 login_start"}>
@@ -42,15 +42,15 @@ const Login_Redacteur = ()=>{
         <div className={"col-xs-6 col-xs-offset-3"} style={{paddingTop:"30px"}}>
 
             <div className={"col-xs-12"} style={{paddingTop:"40px"}}>
-                <input type={"text"} className={"my_text_box_v2 col-xs-12"}   placeholder={"email"} id={"email_"} />
+                <input type={"text"} className={"my_text_box_v2 col-xs-12"}  onChange={()=>{setErr(false)}} placeholder={"email"} id={"email_"} />
             </div>
 
             <div className={"col-xs-12"} style={{paddingTop:"40px"}}>
-                <input type={"password"} className={"my_text_box_v2 col-xs-12"}  placeholder={"Password"} id={"password"} />
+                <input type={"password"} className={"my_text_box_v2 col-xs-12"} onChange={()=>{setErr(false)}} placeholder={"Password"} id={"password"} />
             </div>
 
             <div className={"col-xs-offset-2 col-xs-8"} style={{paddingTop:"40px"}}>
-                <input type={"button"} value={"CONNEXION"} className={"my_button_v2"} onClick={()=>{
+                <input type={"button"} value={"CONNEXION"} className={"my_button_submit"} onClick={()=>{
 
                     let myHeaders = new Headers();
                     myHeaders.append("Content-Type", "application/json");
@@ -72,6 +72,7 @@ const Login_Redacteur = ()=>{
                                         localStorage.setItem("re_token",data.token)
                                         localStorage.setItem("re_email",data.user.email)
                                         localStorage.setItem("re_id",data.user.id)
+                                        localStorage.setItem("re_all",JSON.stringify(data.user))
 
                                         window.location.reload()
                                     }
@@ -94,7 +95,7 @@ const Login_Redacteur = ()=>{
             </div>
         </div>
 
-        {err&&<h5 className={"col-xs-12"} style={{fontWeight:"lighter",paddingTop:"10px"}}> mot de pass/email incorrect</h5>}
+        {err&&<h5 className={"col-xs-12"} style={{fontWeight:"lighter",paddingTop:"10px",fontSize:"150%"}}> mot de pass/email incorrect</h5>}
 
     </div>
 

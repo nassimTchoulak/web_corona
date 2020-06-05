@@ -50,7 +50,7 @@ const Login = ()=>{
             </div>
 
             <div className={"col-xs-offset-2 col-xs-8"} style={{paddingTop:"40px"}}>
-                            <input type={"button"} value={"CONNEXION"} className={"my_button_v2"} onClick={()=>{
+                            <input type={"button"} value={"CONNEXION"} className={"my_button_submit"} onClick={()=>{
 
                                 let myHeaders = new Headers();
                                 myHeaders.append("Content-Type", "application/json");

@@ -1,0 +1,29 @@
+
+.confirmation_back{
+    background-color: rgba(0,0,0,0.2);
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left:0 ;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+
+
+}
+
+.confirmation_body{
+    color: #001531;
+    z-index: 101;
+    border-radius: 7px 7px;
+    background-color: snow;
+    border: solid 2px #001531;
+
+    font-size: 150%;
+    padding: 30px;
+
+    height: 30vh;
+    width: 50vw;
+    margin-top: 30vh;
+    margin-left: 25vw;
+}

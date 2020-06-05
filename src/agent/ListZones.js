@@ -92,7 +92,7 @@ class ListZones extends React.Component{
                             <td style={{width:"10%"}} > {i.totalActive}</td>
                             <td style={{width:"10%"}} >{i.totalRecovered}</td>
                             <td style={{width:"10%"}} >{i.totalConfirmed}</td>
-                            <td style={{width:"15%"}} >  <NavLink to={'/sante/update_zone'} type={"button"} className={"my_button_update"} value={"update"}>update</NavLink> </td>
+                            <td style={{width:"15%"}} >  <NavLink to={'/sante/update_zone'} type={"button"} className={"my_button_deep_blue"} value={"update"}>update</NavLink> </td>
 
 
                         </tr>

@@ -14,7 +14,7 @@
     border: solid 1px white;
 }
 
-.my_button_v2{
+.my_button_submit{
     border-radius: 5px 5px;
     outline: none;
     color: snow;
@@ -28,7 +28,7 @@
     font-size: 1.8em;
 }
 
-.my_button_update,a.my_button_update {
+.my_button_deep_blue,a.my_button_deep_blue {
     border-radius: 3px 3px;
     outline: none;
     color: snow;
@@ -44,26 +44,65 @@
     display: block;
 }
 
-.my_button_update:hover{
+.my_button_deep_blue:hover{
     background-color: #002b63;
 }
 
 
-a.my_button_update:hover{
+a.my_button_deep_blue:hover{
     color: snow;
     text-decoration: none;
 }
 
-a.my_button_update {
+a.my_button_deep_blue {
     background-color: #002143;
 
     text-decoration: none;
 }
-a.my_button_update a:hover{
+a.my_button_deep_blue a:hover{
 
     background-color: #002b63;
     text-decoration: none;
 }
+
+
+
+
+
+.my_button_light_blue,a.my_button_light_blue {
+    border-radius: 3px 3px;
+    outline: none;
+    color: #002143;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #ffffff;
+    font-weight: lighter;
+    font-family: "Quicksand" ;
+    border: solid 0.4mm #002143;
+    width: 80%;
+    margin-left: 10%;
+    display: block;
+}
+
+.my_button_light_blue:hover{
+    background-color: #ffffff;
+}
+a.my_button_light_blue:hover{
+    text-decoration: none;
+}
+a.my_button_light_blue {
+    background-color: #ffffff;
+    text-decoration: none;
+}
+a.my_button_light_blue a:hover{
+    background-color: #ffffff;
+    text-decoration: none;
+}
+
+
+
 
 
 .my_text_box_v4{

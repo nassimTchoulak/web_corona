@@ -25,3 +25,19 @@ export function parser_diff_comment(str){
     let old = new Date(str);
     return parser_diff(Math.abs(old.getTime() - date0.getTime())) ;
 }
+
+export function color_from_string(str){
+
+    function pad(d) {
+        return (d < 10) ? '0' + d.toString() : d.toString();
+    }
+
+    let v1 =  (str.charCodeAt(0)*25)%100 ;
+
+    let v2 =  (str.charCodeAt(1)*25)%100 ;
+
+    let v3 =  (str.charCodeAt(2)*25)%100 ;
+    console.log("#"+v1+v2+v3 )
+
+    return "#"+pad(v1)+pad(v2)+pad(v3) ;
+}
