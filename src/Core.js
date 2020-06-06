@@ -85,8 +85,10 @@ const HEAD_moderateur = ({routes}) =>{
             <div className={"col-xs-12"} >  <div to={"/"} onClick={()=>{
                 window.location.pathname='/'
             }} className={"menu_item"} style={{paddingTop:"0px !important"}} > <img className={"image_logo_redaction"} src={IP+"/api/v0/assets/logo_horizantal.png"} /> </div> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> les Maps </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Statistiques </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>  LES ARTICLES</NavLink> </div>
-            <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> MES ARTICLES </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Notifications </NavLink> </div>
         </div>
         <div className={"col-xs-10 zero_pad"}>
             <div className={"col-xs-12 zero_pad"} style={{"backgroundColor":"white"}}>

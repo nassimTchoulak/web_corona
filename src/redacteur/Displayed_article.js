@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import './displayed_article.css'
 import 'bootstrap/dist/css/bootstrap-theme.min.css'
 import {color_from_string, parser_diff_comment} from "../http_requests/dataCalcule";
 import IP from "../redux/Ip_provider";
 import ReactMarkdown from "react-markdown";
+import Confirmation from "../reusable/Confirmation";
 
 class Displayed_article extends React.Component{
 
@@ -17,8 +18,25 @@ class Displayed_article extends React.Component{
             this.popularite = props.popularite ;
             this.imageUrl = props.imageUrl ;
             this.redacteur = props.redacteur ;
-            //this.tags = props.tags ;
-        this.tags = ["corona_virus","prevention","corona_virus","prevention"]
+
+
+            if( props.tags!==undefined ){
+                let tmp =[]
+                props.tags.forEach((i)=>{
+                    tmp.push(i.description)
+                })
+                this.tags = tmp
+            }
+            else{
+                this.tags = ["prevention","corona_virus","prevention"]
+            }
+
+            if(props.delete_comment===undefined){
+                this.delete_comment = true
+            }
+            else{
+                this.delete_comment = false
+            }
 
             this.state = {
                 detail : false ,
@@ -91,7 +109,7 @@ class Displayed_article extends React.Component{
                     </div>
 
             <div className="col-xs-5">
-                <img width={"auto"} height={"200px"} src={this.imageUrl} />
+                <img width={"100%"} height={"200px"} src={this.imageUrl} />
             </div>
 
             <div className={"col-xs-4 zero_pad"} style={{display:"inline"}}>
@@ -105,7 +123,7 @@ class Displayed_article extends React.Component{
                        <div className={"col-xs-12 zero_pad "} style={{position:"relative"}} >
                             <div  style={{position:"absolute",top:"0px",right:"0px",width:"20vw"}}>
                                 <div className={"col-xs-12 zero_pad"} style={{backgroundColor:"transparent",fontSize:"40%"}}>
-                                    {this.state.redacteur_detail&& <div style={{border:"solid 1px black",borderRadius:"5px 5px "}} className={"col-xs-12 profile_zone"}>
+                                    {this.state.redacteur_detail&& <div style={{border:"solid 1px black",borderRadius:"5px 5px ",zIndex:"50"}} className={"col-xs-12 profile_zone"}>
 
                                                         <div className={"col-xs-12 profile_element"}>
                                                             <span style={{color:"#002148"}} className={"glyphicon glyphicon-chevron-right"}></span> <span>Email  :</span> <span className={"profile_decale"}> {this.redacteur.email}</span>
@@ -216,12 +234,7 @@ class Displayed_article extends React.Component{
                                                         this.state.comments.map((i,itr)=>{
                                                             return <div className={"col-xs-12 zero_pad"} align={"left"} style={{marginTop:"20px",backgroundColor:"#f2f2f3",padding:"5px"}} key={itr}>
 
-                                                                    <div className={"col-xs-12 mail_time zero_pad"} align={"left"}>
-                                                                        <div className={"comment_mail col-xs-8 zero_pad"}><span className={"glyphicon glyphicon-chevron-right zero_pad_v2"}></span><div className={"zero_pad_v2"}>{" "+i.utilisateur.username}</div></div>
-                                                                        <div className={"comment_time col-sx-4 zero_pad"}>+{parser_diff_comment(i.createdAt)}</div>
-                                                                    </div>
-
-                                                                    <div className={"col-xs-12 comment_txt zero_pad"}>{i.contenu}</div>
+                                                                <Comment_comp {...i} delete_comment={this.delete_comment} update_all={()=>{this.get_all_detail()}} />
 
                                                             </div>
                                                         })
@@ -242,6 +255,53 @@ class Displayed_article extends React.Component{
         </React.Fragment>
     }
 
+}
+
+const Comment_comp = (props)=> {
+
+    const [del, set_delete] = useState(false)
+
+    return <React.Fragment>
+
+        <div className={"col-xs-12 mail_time zero_pad"} align={"left"}>
+            <div className={"comment_mail col-xs-8 zero_pad"}>
+                <span className={"glyphicon glyphicon-chevron-right zero_pad_v2"}></span>
+                <div
+                    className={"zero_pad_v2"}>{" " + decodeURI(props.utilisateur.username || "").replace("+", " ")}</div>
+            </div>
+            <div className={"comment_time col-sx-3 zero_pad"}>+{parser_diff_comment(props.createdAt)}</div>
+
+            {props.delete_comment &&
+            <div className={"col-xs-1"}><span className={"glyphicon glyphicon-remove"} onClick={() => {
+                set_delete(true)
+            }} style={{color: "#a82323", cursor: "pointer"}}></span></div>}
+
+        </div>
+
+
+        <div className={"col-xs-12 comment_txt zero_pad"}>{decodeURI(props.contenu).replace(/\+/g, " ")}</div>
+
+        <div style={{fontSize: "80%"}}>
+            <Confirmation message={"etes-vous sur de vouloir supprimer ce commentaire ?"}
+                          hide={() => {
+                              set_delete(false)
+                          }} execute={() => {
+                let requestOptions = {
+                    method: 'DELETE',
+                    redirect: 'manual'
+                };
+
+                fetch(IP + "/api/v0/CommentArticle/"+props.commentArticleId, requestOptions)
+                    .then(response => response.json())
+                    .then(result => {
+                        props.update_all();
+                        console.log(result)
+                    })
+                    .catch(error => console.log('error', error));
+
+            }} visible={del}/></div>
+
+    </React.Fragment>
 }
 
 export default Displayed_article

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@jest/globals": "^26.0.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -11,7 +12,10 @@
     "draft-js": "^0.11.5",
     "draft-js-export-markdown": "^1.4.0",
     "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "eslint-plugin-jest": "^23.13.2",
     "jasmine": "^3.5.0",
+    "jest-enzyme": "^7.1.2",
     "mapbox-gl": "^1.10.0",
     "markdown-it": "^10.0.0",
     "react": "^16.13.1",

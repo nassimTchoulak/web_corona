@@ -67,6 +67,9 @@ class Waiting_Articles extends React.Component{
                         </div>
                     })
                 }
+                {
+                    (this.state.submitted.length===0)&&<h2 style={{fontSize:"140%"}}> Aucun article disponible Ici </h2>
+                }
             </div>
 
 

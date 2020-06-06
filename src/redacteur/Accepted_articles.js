@@ -37,7 +37,7 @@ const Accepted_articles = (props)=>{
             <div className={"col-xs-8 col-xs-offset-1"} style={{border:"solid 0px red"}}>
                 {
                     props.articles.accepted.map((i,itr)=>{
-                        return <div key={itr} className={"col-xs-12"}> <Displayed_article {...i} /> </div>
+                        return <div key={itr} className={"col-xs-12"}> <Displayed_article {...i} delete_comment={true} /> </div>
                     })
                 }
             </div>

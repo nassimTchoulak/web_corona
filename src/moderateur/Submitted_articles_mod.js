@@ -62,6 +62,9 @@ const Submitted_articles_mod = (props)=>{
                     </div>
                 })
             }
+            {
+                (props.articles.accepted.length===0)&&<h2 style={{fontSize:"140%"}}> Aucun article disponible Ici </h2>
+            }
         </div>
 
         <div className={"col-xs-2"} style={{backgroundColor:"#fcfcfc"}}>  hello world for all articles coming </div>
@@ -75,7 +78,7 @@ const Side_action = (props)=>{
     const [to_refuse,set_to_refuse] = useState(false)
 
     return   <div className={"col-xs-12 zero_pad side_article_validation"} >
-        <div className={"col-xs-12"} style={{paddingTop:"40px"}}>
+        <div className={"col-xs-12 zero_pad"} style={{paddingTop:"40px"}}>
             <input type={"button"} value={"Archiver"} className={"my_button_reject_article"} onClick={()=>{
                 set_to_refuse(true)
             }}/>

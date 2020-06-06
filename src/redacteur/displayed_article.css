@@ -49,6 +49,7 @@
 
     font-size: 150%;
     padding: 30px;
+    overflow: hidden;
 
     height: 80vh;
     width: 90vw;
