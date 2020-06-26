@@ -85,8 +85,9 @@ a.menu_item:hover{
 }
 
 .first_all{
-    background-image: linear-gradient(to top right , #bac9d9,#001531);
-    height: 100vh;
+    background-image: linear-gradient(to top right , #bac9d9, #22222a);
+
+
     color: snow;
     font-family: "Exo", "Quicksand SemiBold";
 }

@@ -257,7 +257,7 @@ class Displayed_article extends React.Component{
 
 }
 
-const Comment_comp = (props)=> {
+export const Comment_comp = (props)=> {
 
     const [del, set_delete] = useState(false)
 
@@ -274,7 +274,7 @@ const Comment_comp = (props)=> {
             {props.delete_comment &&
             <div className={"col-xs-1"}><span className={"glyphicon glyphicon-remove"} onClick={() => {
                 set_delete(true)
-            }} style={{color: "#a82323", cursor: "pointer"}}></span></div>}
+            }} style={{color: "#a82323", cursor: "pointer"}}> </span></div>}
 
         </div>
 

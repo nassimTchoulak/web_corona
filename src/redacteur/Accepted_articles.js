@@ -41,7 +41,7 @@ const Accepted_articles = (props)=>{
                     })
                 }
             </div>
-            <div className={"col-xs-3"}>  hello world for all articles coming </div>
+            <h1 className={"col-xs-3"} style={{color:"#002148"}}>  les tags populaires </h1>
 
     </div>
 

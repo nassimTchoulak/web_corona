@@ -1,7 +1,7 @@
 
 
 .login_all{
-    background-image: url("http://localhost:8080/api/v0/assets/back.jpg") ;
+    background-image: url("https://coronawatch-api-v0.herokuapp.com/api/v0/assets/back.jpg") ;
     color: white;
     height: 100vh;
     font-family: "Exo", "Quicksand SemiBold";

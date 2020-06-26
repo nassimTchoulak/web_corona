@@ -30,7 +30,7 @@ const Confirmation = (props)=>{
 
                 <div className={"col-xs-offset-2 col-xs-4"}>
 
-                    <input type={"button"} className={"my_button_light_blue"} onClick={()=>{
+                    <input type={"button"} className={"my_button_reject"} onClick={()=>{
 
                         if(props.hide===undefined){
                             alert("undifined execute")

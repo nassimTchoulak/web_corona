@@ -18,6 +18,10 @@ import Login_moderateur from "./moderateur/Login_moderateur";
 import Waiting_Articles from "./moderateur/Waiting_Articles";
 import Rejected_Article from "./moderateur/Rejected_Articles";
 import My_redaction from "./redacteur/My_redaction";
+import Video_valide from "./moderateur/Video_valide";
+import Video_attente from "./moderateur/Video_attente";
+import Centres_Display from "./moderateur/centres/Centres";
+import Centres_ADD from "./moderateur/centres/Centre_ADD";
 
 const Head_sante = ({ routes }) =>{
 
@@ -54,14 +58,20 @@ const HEAD_REDACTION = ({ routes }) =>{
     }
 
     return <div className={"col-xs-12 zero_pad"}>
-        <div className={"col-12 zero_pad menu_holder"} >
+        <div className={"col-12 zero_pad menu_holder"} style={{display:"flex",flexWrap:"nowrap"}} >
 
-            <div className={"col-xs-1"} >  <div to={"/"} onClick={()=>{
+            <div className={"col-xs-1"} >  <div  onClick={()=>{
                 window.location.pathname='/'
-            }} className={"menu_item "}> <img className={"image_logo"} src={IP+"/api/v0/assets/logo.png"}  /> </div> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/redaction/published"} className={"menu_item"}> TOUT LES ARTICLES </NavLink> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/redaction/my_redaction"} className={"menu_item"}> MES ARTICLES</NavLink> </div>
-            <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/redaction"} className={"menu_item"}> REDIGER </NavLink> </div>
+            }} className={"menu_item "}> <img className={"image_logo"} src={IP+"/api/v0/assets/logo.png"}   alt={"logo"}/> </div> </div>
+
+            <div className={"col-xs-6"} style={{display:"flex",flexWrap:"nowrap"}} >
+
+                <div style={{width:"300px"}}>  <NavLink to={"/redaction/published"} className={"menu_item"}> TOUT LES ARTICLES </NavLink> </div>
+                <div style={{width:"200px"}} >  <NavLink to={"/redaction/my_redaction"} className={"menu_item"}> MES ARTICLES</NavLink> </div>
+
+            </div>
+
+            <div className={"col-xs-2 col-xs-offset-1"} >  <NavLink to={"/redaction"} className={"menu_item"}> REDIGER </NavLink> </div>
             <div className={"col-xs-2"} >  <NavLink to={"/sante/redaction"} className={"menu_item"}> Profil </NavLink> </div>
         </div>
 
@@ -81,13 +91,15 @@ const HEAD_moderateur = ({routes}) =>{
 
     return <div className={"col-xs-12 zero_pad"}>
 
-        <div className={"col-xs-2  menu_mod"}>
+        <div className={"col-xs-2  menu_mod"}  style={{position:"sticky",height:"100vh",top:"0"}}>
             <div className={"col-xs-12"} >  <div to={"/"} onClick={()=>{
                 window.location.pathname='/'
-            }} className={"menu_item"} style={{paddingTop:"0px !important"}} > <img className={"image_logo_redaction"} src={IP+"/api/v0/assets/logo_horizantal.png"} /> </div> </div>
+            }} className={"menu_item"} style={{paddingTop:"0px !important",cursor:"pointer"}} > <img className={"image_logo_redaction"} src={IP+"/api/v0/assets/logo_horizantal.png"} /> </div> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> les Maps </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Statistiques </NavLink> </div>
-            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>  LES ARTICLES</NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>   Articles</NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/centres/disponibles"} className={"menu_item"}>  Centres d'acceuil </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/video/valide"} className={"menu_item"}>  Videos utlisateur </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Notifications </NavLink> </div>
         </div>
         <div className={"col-xs-10 zero_pad"}>
@@ -205,6 +217,26 @@ const routes = [
                 path:"/moderateur/articles/rejected",
                 exact: true ,
                 component: Rejected_Article
+            },
+            {
+                path:"/moderateur/video/valide",
+                exact: true ,
+                component: Video_valide
+            },
+            {
+                path:"/moderateur/video/attente",
+                exact: true ,
+                component: Video_attente
+            } ,
+            {
+                path: "/moderateur/centres/disponibles" ,
+                exact:true ,
+                component:Centres_Display
+            },
+            {
+                path: "/moderateur/centres/new" ,
+                exact:true ,
+                component:Centres_ADD
             }
         ]
 

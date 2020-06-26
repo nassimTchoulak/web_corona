@@ -185,7 +185,7 @@ class Redaction extends React.Component {
                                         <div className={"col-xs-12"} >
 
                                             <div className={"label_new col-xs-4"}> Titre de l'article:</div>
-                                            <div className={"col-xs-8"} style={{fontSize:"140%"}}> <input id={"titre"} type={"text"} placeholder={"Titre"} className={"my_text_box_v4"}/> </div>
+                                            <div className={"col-xs-8"} style={{fontSize:"140%"}}> <input id={"titre"} type={"text"} maxLength={40} placeholder={"Titre"} className={"my_text_box_v4"}/> </div>
 
                                         </div>
 

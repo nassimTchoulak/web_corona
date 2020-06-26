@@ -52,7 +52,8 @@ class My_redaction extends React.Component {
                             <div className={"col-xs-4"} style={{textAlign:"left", paddingTop:"60px"}}>
 
                                 <div className={"col-xs-12"} >
-                                    <h2 className={"col-xs-4"}>Status: </h2>
+
+                                    <h2 className={""}>Status: </h2>
                                     { (()=>{
                                         console.log(i.status)
 

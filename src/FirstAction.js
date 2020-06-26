@@ -4,6 +4,8 @@ import {NavLink} from "react-router-dom";
 
 import './core.css'
 import './default_ui.css'
+import Footer from "./reusable/Footer";
+
 
 
 const FirstAction = ()=>{
@@ -56,7 +58,24 @@ const FirstAction = ()=>{
 
             </div>
 
+            <div className={"col-xs-12 zero_pad"} style={{paddingTop:"5%"}}>
+                <div className={"col-xs-offset-4 col-xs-4 role_selection"} onClick={()=>{
+                    window.location.pathname='/moderateur'
+                }}>
+
+                    <h1>
+                        <div className={"col-xs-12"} style={{paddingBottom:"20px"}}>       SE CONNECTER EN TANT QUE  </div>  <div className={"col-xs-12"} style={{paddingBottom:"20px"}}>  MODERATEUR </div>
+
+
+
+                        <div className={"col-xs-12"}><span style={{color:"#f32039",fontSize:"200%"}} className={"\tglyphicon glyphicon-cog"}></span></div>
+                    </h1>
+
+                </div>
+            </div>
+
         </div>
+        <Footer />
 
     </div>
 
