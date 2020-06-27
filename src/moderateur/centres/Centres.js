@@ -2,11 +2,12 @@
 import React, {useState} from "react";
 import ReactMapGL, {Marker} from "react-map-gl";
 import IP, {API_TOKEN} from "../../redux/Ip_provider";
-
+import { } from 'react-router-dom'
 import Centre_head from "./Centres_Head";
 import Footer from "../../reusable/Footer";
 import './centre_map.css'
 import UpdateZone from "../../agent/UpdateZone";
+import Confirmation from "../../reusable/Confirmation";
 
 export const pinStyle = {
     color: '#02dd6c',
@@ -37,7 +38,8 @@ const Update_helper = (props)=>{
             <input type={"button"} value={" Valider "} onClick={()=>{
 
                 let nb = Number( document.querySelector("#up_number").value )
-                if((nb<=props.nbrLitsTotal)&&(nb>0)){
+                if((nb<=props.nbrLitsTotal)&&(nb>=0)){
+
                     let myHeadersa = new Headers();
                     myHeadersa.append("Content-Type", "application/json");
 
@@ -54,12 +56,13 @@ const Update_helper = (props)=>{
                         .then(response => response.json())
                         .then(result => {
                             setUpdate(false)
+                            props.synch_all()
                         })
                         .catch(error => console.log('error', error));
                 }
                 else{
                     setErr(true)
-                    props.synch_all()
+
                 }
 
             }} className={"my_button_green"}  />
@@ -86,7 +89,8 @@ class  Centres_Display extends React.Component {
                 zoom: 5
             } ,
             centres :[] ,
-            selected_centre:{}
+            selected_centre:{} ,
+            visible_delete:false
 
         }
     }
@@ -101,15 +105,12 @@ class  Centres_Display extends React.Component {
             .then(response => response.json())
             .then(result => {
 
-                if(result.rows.length>0){
-                    let tmp =[]
-                    result.rows.forEach((i)=>{
-                        tmp.push({...i,...i.zone,zone:""})
-                    })
+                if(result.rows.length>=0){
+
                     this.setState({
-                        centres:tmp
+                        centres:result.rows
                     })
-                    console.log(tmp)
+                    console.log(result.rows)
                 }
             })
             .catch(error => console.log('error', error));
@@ -155,7 +156,13 @@ class  Centres_Display extends React.Component {
                                 <div className={"col-xs-12"}> Disponiblité : <span style={{fontWeight:"bold"}}> {this.state.selected_centre.nbrLitsLibre}/{this.state.selected_centre.nbrLitsTotal} </span></div>
 
                                 <div className={"col-xs-12"} style={{paddingTop:"30px"}}>
-                                   <Update_helper {...this.state.selected_centre} synch_all={()=>{this.synchronize_centres()}} />
+                                   <Update_helper {...this.state.selected_centre} synch_all={()=>{
+                                       this.setState({selected_centre:{}})
+
+                                       this.synchronize_centres()
+
+
+                                   }} />
                                 </div>
 
 
@@ -170,6 +177,27 @@ class  Centres_Display extends React.Component {
 
 
                 </ReactMapGL></div>
+
+            <div className={"col-xs-4 col-xs-offset-6"} style={{fontSize:"150%",paddingTop:"40px"}}> <input type={"button"} className={"my_button_reject"} onClick={()=>{
+                this.setState({visible_delete:true})
+            }} value={" ReInitialiser les centres "}/> </div>
+            <Confirmation message={"étes-vous sur de vouloir supprimer tout les centres d'acceuil et remettre à zero ?"} hide={()=>{  this.setState({visible_delete:false}) }} execute={()=>{
+                let requestOptions = {
+                    method: 'DELETE',
+                    redirect: 'manual'
+                };
+
+                fetch(IP+"/api/v0/centreAcceuil", requestOptions)
+                    .then(response => response.text())
+                    .then(result => {
+                        console.log("synchin,g")
+                        this.synchronize_centres()
+                        this.setState({visible_delete:false})
+                    })
+                    .catch(error => console.log('error', error));
+
+
+            }} visible={this.state.visible_delete} />
 
             <Footer />
 

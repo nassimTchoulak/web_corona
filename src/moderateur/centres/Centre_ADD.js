@@ -37,49 +37,27 @@ class  Centres_ADD extends React.Component {
     }
 
     submit_centre = (city)=>{
-        let myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
 
-        let raw = JSON.stringify({...this.state.selected_city.coords,"counrtyCode":"DZ","city":city,"country":"ALGERIA"});
+        let nom = document.querySelector("#ce_nom").value
+        let extra = document.querySelector("#ce_extra").value
+        let nb = Number( document.querySelector("#ce_capacite").value)
 
-        let requestOptions = {
+
+        let myHeadersa = new Headers();
+        myHeadersa.append("Content-Type", "application/json");
+
+        let rawa = JSON.stringify({...this.state.selected_city.coords,"city":city,"diametre":10,"nbrLitsLibre":nb,"nbrLitsTotal":nb,"nom":nom,"information":extra,"valide":true});
+
+        let requestOptionsa = {
             method: 'POST',
-            headers: myHeaders,
-            body: raw,
+            headers: myHeadersa,
+            body: rawa,
             redirect: 'manual'
         };
 
-        fetch(IP+"/api/v0/zone", requestOptions)
+        fetch(IP+"/api/v0/centreAcceuil", requestOptionsa)
             .then(response => response.json())
-            .then(result => {
-
-                    console.log(result)
-                    let id = result.content.zoneId ;
-                    let nom = document.querySelector("#ce_nom").value
-                      let extra = document.querySelector("#ce_extra").value
-                    let nb = Number( document.querySelector("#ce_capacite").value)
-
-                    let myHeaders45 = new Headers();
-                    myHeaders45.append("Content-Type", "application/json");
-
-                    let raw45 = JSON.stringify({"diametre":0,"nom":nom,"information":extra,"zoneZoneId":id,"nbrLitsTotal":nb,"nbrLitsLibre":nb,"valide":true});
-
-                    let requestOptions7 = {
-                        method: 'POST',
-                        headers: myHeaders45,
-                        body: raw45,
-                        redirect: 'manual'
-                    };
-
-                    fetch(IP+"/api/v0/centreAcceuil", requestOptions7)
-                        .then(response => response.json())
-                        .then(result => {
-                            window.location.pathname ='/moderateur/centres/disponibles'
-                        })
-                        .catch(error => console.log('error', error));
-
-
-            })
+            .then(result =>  {  document.querySelector("#redirect_li").click() })
             .catch(error => console.log('error', error));
     }
 
@@ -119,6 +97,7 @@ class  Centres_ADD extends React.Component {
                 </h1>
 
             </div>
+            <a id={"redirect_li"} style={{display:"none"}} href={"/moderateur/centres/disponibles"} >k</a>
 
 
             <div className={"col-xs-5"}>

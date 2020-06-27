@@ -72,7 +72,7 @@ class VideoArticle extends React.Component{
         fetch(IP+"/api/v0/video/moderateur/"+this.videoId, requestOptions)
             .then(response => response.json())
             .then(result => {
-                window.location.pathname = "/moderateur/video/valide"
+                document.querySelector("#redirect_li2").click()
 
             })
             .catch(error => console.log('error', error));
@@ -104,7 +104,11 @@ class VideoArticle extends React.Component{
 
 
 
-        <h2 style={{color:"#002148",padding:"0"}} align={"left"}> <div> Titre de la video : </div> </h2>
+        <h2 style={{color:"#002148",padding:"0"}} align={"left"}> <div> Titre de la video : </div>
+
+
+            <a id={"redirect_li2"} style={{display:"none"}} href={"/moderateur/video/valide"} >k</a>
+        </h2>
 
             <div className="col-xs-3">
 
