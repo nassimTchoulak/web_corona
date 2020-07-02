@@ -101,7 +101,7 @@ const HEAD_moderateur = ({routes}) =>{
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>   Articles</NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/centres/disponibles"} className={"menu_item"}>  Centres d'acceuil </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/video/valide"} className={"menu_item"}>  Videos utlisateur </NavLink> </div>
-            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/robots"} className={"menu_item"}> Publications des robots </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/robots/valide"} className={"menu_item"}> Publications des robots </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Notifications </NavLink> </div>
         </div>
         <div className={"col-xs-10 zero_pad"}>
@@ -241,10 +241,16 @@ const routes = [
                 component:Centres_ADD
             },
             {
-                path:"/moderateur/robots",
+                path:"/moderateur/robots/valide",
+                exact: true ,
+                component:Publication_holder
+            } ,
+            {
+                path:"/moderateur/robots/attente",
                 exact: true ,
                 component:Publication_holder
             }
+
         ]
 
     }

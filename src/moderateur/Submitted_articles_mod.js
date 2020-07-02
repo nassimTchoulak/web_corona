@@ -52,7 +52,7 @@ const Submitted_articles_mod = (props)=>{
         <div className={"col-xs-10"} style={{border:"solid 0px red"}}>
             {
                 props.articles.accepted.map((i,itr)=>{
-                    return <div key={itr} className={"col-xs-12 zero_pad"}>
+                    return <div key={i.articleId} className={"col-xs-12 zero_pad"}>
                         <div className={"col-xs-10 zero_pad" }>
                             <Displayed_article {...i} /> </div>
                         <div className={"col-xs-2 zero_pad"}>

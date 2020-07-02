@@ -121,6 +121,21 @@ export function defaultReducer(state=init_state,action) {
             let ls = action.payload.new_added ;
             let current_page = action.payload.current_page ;
 
+            if(current_page===1){
+
+                state = {
+                    ...state ,
+                    articles: {
+                        ...state.articles ,
+                        allow_update: true ,
+                        accepted: [...ls] ,
+                        page : current_page+1
+
+                    }
+                }
+                break
+            }
+
             if(ls.length>0){
                 state = {
                     ...state ,
