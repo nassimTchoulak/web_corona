@@ -97,7 +97,7 @@ class Redaction extends React.Component {
 
                     console.log(result45)
                     if(result45.message==="success"){
-                        window.location.pathname = "/redaction/preview/"+result45.created.articleId ;
+                        window.location.pathname = "/redaction/my_redaction" ;
                     }
                 })
                 .catch(error => console.log('error', error));

@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {connect} from 'react-redux'
 import Displayed_article from "./Displayed_article";
 import {get_article_accepted_by_page , disallow_article_update} from "../redux/action";
+import TagsPopulaires from "./PopularTags";
 
 
 
@@ -41,7 +42,8 @@ const Accepted_articles = (props)=>{
                     })
                 }
             </div>
-            <h1 className={"col-xs-3"} style={{color:"#002148"}}>  les tags populaires </h1>
+            <div className={"col-xs-3"} >
+            <TagsPopulaires /> </div>
 
     </div>
 

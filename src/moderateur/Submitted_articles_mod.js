@@ -6,6 +6,7 @@ import IP from "../redux/Ip_provider";
 import {NavLink} from "react-router-dom";
 import Head_Article from "./Head_Articles";
 import Rejection_Cause from "../reusable/RejectionCause";
+import TagsPopulaires from "../redacteur/PopularTags";
 
 
 
@@ -67,7 +68,10 @@ const Submitted_articles_mod = (props)=>{
             }
         </div>
 
-        <div className={"col-xs-2"} style={{backgroundColor:"#fcfcfc"}}>  hello world for all articles coming </div>
+        <div className={"col-xs-2"} style={{backgroundColor:"#fcfcfc"}}>
+
+            <TagsPopulaires />
+        </div>
 
     </div>
 

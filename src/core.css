@@ -85,7 +85,7 @@ a.menu_item:hover{
 }
 
 .first_all{
-    background-image: linear-gradient(to top right , #bac9d9, #22222a);
+    background-image: linear-gradient(to bottom right , #bac9d9, #22222a);
 
 
     color: snow;

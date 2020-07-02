@@ -22,6 +22,7 @@ import Video_valide from "./moderateur/Video_valide";
 import Video_attente from "./moderateur/Video_attente";
 import Centres_Display from "./moderateur/centres/Centres";
 import Centres_ADD from "./moderateur/centres/Centre_ADD";
+import Publication_holder from "./moderateur/publication/publication_holder";
 
 const Head_sante = ({ routes }) =>{
 
@@ -100,6 +101,7 @@ const HEAD_moderateur = ({routes}) =>{
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>   Articles</NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/centres/disponibles"} className={"menu_item"}>  Centres d'acceuil </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/video/valide"} className={"menu_item"}>  Videos utlisateur </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/robots"} className={"menu_item"}> Publications des robots </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Notifications </NavLink> </div>
         </div>
         <div className={"col-xs-10 zero_pad"}>
@@ -237,6 +239,11 @@ const routes = [
                 path: "/moderateur/centres/new" ,
                 exact:true ,
                 component:Centres_ADD
+            },
+            {
+                path:"/moderateur/robots",
+                exact: true ,
+                component:Publication_holder
             }
         ]
 

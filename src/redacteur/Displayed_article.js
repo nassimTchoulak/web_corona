@@ -28,7 +28,7 @@ class Displayed_article extends React.Component{
                 this.tags = tmp
             }
             else{
-                this.tags = ["prevention","corona_virus","prevention"]
+                this.tags = [""]
             }
 
             if(props.delete_comment===undefined){
