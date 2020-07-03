@@ -6,7 +6,7 @@ import {
     GET_DZ_RISK,
     SET_VISIBLE_RISK,
     SET_UPDATE_ZONE,
-    GET_ARTICLES_ACCEPTED_BY_PAGE, DISALLOW_ARTICLE_PAGE
+    GET_ARTICLES_ACCEPTED_BY_PAGE, DISALLOW_ARTICLE_PAGE, GET_WORLD_DATA, SET_WORLD_SELECTED
 } from "./action"
 
 
@@ -31,6 +31,13 @@ const init_state = {
 
 
         selected_for_update:{}//used in update window
+    },
+
+
+    world_data :{
+      loaded :false ,
+      zones :[] ,
+      selected:{}
     },
 
 
@@ -166,6 +173,27 @@ export function defaultReducer(state=init_state,action) {
                 ...state , articles: {...state.articles , allow_update: false}
             }
 
+            break
+        case GET_WORLD_DATA:
+            state = {
+                ...state ,
+                world_data: {
+                    loaded: true ,
+                    selected: {} ,
+                    zones : action.payload
+                }
+            }
+            break
+
+        case SET_WORLD_SELECTED:
+            state = {
+                ...state ,
+                world_data: {
+                    ...state.world_data,
+                    selected: action.payload ,
+
+                }
+            }
             break
 
 

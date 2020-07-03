@@ -16,8 +16,47 @@ export const GET_ARTICLES_ACCEPTED_BY_PAGE = 'GET_ALL_ARTICLES_ACCEPTED_BY_PAGE'
 
 export const DISALLOW_ARTICLE_PAGE = 'DIS_ALLOW_PAGE'
 
+
+export const GET_WORLD_DATA ='GET_WORLD_DATA'
+
+export const SET_WORLD_SELECTED ='SEt_WORLD_SELECTED'
+
+
+export function set_selected_zone_world(obj){
+    return { type:SET_WORLD_SELECTED , payload :obj }
+}
+
+
 export function set_displayed_update_zone(obj){
     return {type:SET_UPDATE_ZONE , payload:obj}
+}
+
+export function get_world_data(){
+    return (dispatch)=>{
+        let requestOptions = {
+            method: 'GET',
+            redirect: 'manual'
+        };
+
+        fetch(IP+"/api/v0/zone/allzones?sort=-confirmed&limit=200", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+
+                let tmp = data.rows ;
+                let final = [] ;
+                tmp.forEach((i)=>{
+                    if(i.dataZones.length>0){
+                        final.push(
+                            {...i, ...i.dataZones[0] ,dataZones:[] }
+                        )}
+                })
+                dispatch({
+                    type:GET_WORLD_DATA ,
+                    payload :final
+                })
+            })
+            .catch(error => console.log('error', error));
+    }
 }
 
 
