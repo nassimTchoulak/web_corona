@@ -22,6 +22,7 @@ import Video_valide from "./moderateur/Video_valide";
 import Video_attente from "./moderateur/Video_attente";
 import Centres_Display from "./moderateur/centres/Centres";
 import Centres_ADD from "./moderateur/centres/Centre_ADD";
+import Publication_holder_accepted from "./moderateur/publication/publication_holder_accepted";
 import Publication_holder from "./moderateur/publication/publication_holder";
 
 const Head_sante = ({ routes }) =>{
@@ -243,7 +244,7 @@ const routes = [
             {
                 path:"/moderateur/robots/valide",
                 exact: true ,
-                component:Publication_holder
+                component:Publication_holder_accepted
             } ,
             {
                 path:"/moderateur/robots/attente",

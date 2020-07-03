@@ -1,0 +1,8 @@
+.facebook_link{
+    color: #001531;
+}
+.facebook_link:hover{
+    color: #2966ff;
+    text-decoration: #2966ff ;
+    cursor: pointer;
+}
