@@ -41,3 +41,15 @@ export function color_from_string(str){
 
     return "#"+pad(v1)+pad(v2)+pad(v3) ;
 }
+
+export function parser_date(str){
+    let dt = new Date(str);
+
+    let pr =["dimanche","lundi","mardi","mercredi","jeudi","vendredi","Samedi"];
+
+    return (pr[dt.getDay()]+"  "+dt.getDate()+"-"+(dt.getMonth()+1)+"-"+dt.getFullYear()+" ");
+}
+
+export function numberWithSpaces(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}

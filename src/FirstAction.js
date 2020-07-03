@@ -33,7 +33,7 @@ const FirstAction = ()=>{
         <div className={"col-xs-12"} style={{paddingTop:"100px"}}>
 
             <div className={"col-xs-offset-1 col-xs-4 role_selection"} onClick={()=>{
-                window.location.pathname='/redaction'
+                window.location.pathname='/redaction/published'
             }}>
                 <h1>
                              <div className={"col-xs-12"} style={{paddingBottom:"20px"}}>       SE CONNECTER EN TANT QUE  </div>
@@ -60,7 +60,7 @@ const FirstAction = ()=>{
 
             <div className={"col-xs-12 zero_pad"} style={{paddingTop:"5%"}}>
                 <div className={"col-xs-offset-4 col-xs-4 role_selection"} onClick={()=>{
-                    window.location.pathname='/moderateur'
+                    window.location.pathname='/moderateur/world'
                 }}>
 
                     <h1>
@@ -68,7 +68,7 @@ const FirstAction = ()=>{
 
 
 
-                        <div className={"col-xs-12"}><span style={{color:"#f32039",fontSize:"200%"}} className={"\tglyphicon glyphicon-cog"}></span></div>
+                        <div className={"col-xs-12"}><span style={{color:"#f32039",fontSize:"200%"}} className={"glyphicon glyphicon-cog"}></span></div>
                     </h1>
 
                 </div>

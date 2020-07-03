@@ -24,6 +24,8 @@ import Centres_Display from "./moderateur/centres/Centres";
 import Centres_ADD from "./moderateur/centres/Centre_ADD";
 import Publication_holder_accepted from "./moderateur/publication/publication_holder_accepted";
 import Publication_holder from "./moderateur/publication/publication_holder";
+import WorldMap from "./moderateur/WorldMap/WorldMap";
+import ProfilRedacteur from "./redacteur/ProfilRedacteur";
 
 const Head_sante = ({ routes }) =>{
 
@@ -74,7 +76,7 @@ const HEAD_REDACTION = ({ routes }) =>{
             </div>
 
             <div className={"col-xs-2 col-xs-offset-1"} >  <NavLink to={"/redaction"} className={"menu_item"}> REDIGER </NavLink> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/sante/redaction"} className={"menu_item"}> Profil </NavLink> </div>
+            <div className={"col-xs-2"} >  <NavLink to={"/redaction/profile"} className={"menu_item"}> Profil </NavLink> </div>
         </div>
 
         <div className={"col-xs-12 zero_pad"} style={{"backgroundColor":"white"}}>
@@ -97,7 +99,7 @@ const HEAD_moderateur = ({routes}) =>{
             <div className={"col-xs-12"} >  <div to={"/"} onClick={()=>{
                 window.location.pathname='/'
             }} className={"menu_item"} style={{paddingTop:"0px !important",cursor:"pointer"}} > <img className={"image_logo_redaction"} src={IP+"/api/v0/assets/logo_horizantal.png"} /> </div> </div>
-            <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> les Maps </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/world"} className={"menu_item"}> Carte Mondiale </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Statistiques </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>   Articles rédacteurs</NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/centres/disponibles"} className={"menu_item"}>  Centres d'acceuil </NavLink> </div>
@@ -193,11 +195,16 @@ const routes = [
                 exact: true ,
                 component: Accepted_articles
             },
-            ,
             {
                 path:"/redaction/my_redaction",
                 exact: true ,
                 component: My_redaction
+            },
+            ,
+            {
+                path:"/redaction/profile",
+                exact: true ,
+                component: ProfilRedacteur
             }
         ]
     } ,
@@ -250,6 +257,11 @@ const routes = [
                 path:"/moderateur/robots/attente",
                 exact: true ,
                 component:Publication_holder
+            } ,
+            {
+                path:"/moderateur/world",
+                exact: true ,
+                component:WorldMap
             }
 
         ]

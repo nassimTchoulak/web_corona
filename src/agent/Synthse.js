@@ -8,6 +8,7 @@ import ListZones from "./ListZones";
 import mapboxgl from 'mapbox-gl'
 import Map from "./Map";
 import {NavLink} from "react-router-dom";
+import {numberWithSpaces} from "../http_requests/dataCalcule";
 
 class Synthse extends React.Component{
 
@@ -42,14 +43,19 @@ class Synthse extends React.Component{
             redirect: 'follow'
         };
 
-        fetch(IP+"/api/v0/zone/groupByCountry?cc=DZ&sort=-dead", requestOptions)
+        fetch(IP+"/api/v0/zone/groupByCountry?sort=dead&limit=200", requestOptions)
             .then(response => response.json().then((data)=>{
 
-               if(data.items.length>0) {
-                   this.setState({
-                       global_dz: data.items[0]
-                   })
-               }
+                data.items.forEach((i)=>{
+                    if(i.counrtyCode==="DZ"){
+
+
+                        this.setState({
+                            global_dz: i
+                        })
+                    }
+                })
+
 
 
 
@@ -78,7 +84,7 @@ class Synthse extends React.Component{
 
                     <div className={"col-xs-4"}>
                         <h1 className={"synth_title"}>
-                            Bilan du virus Covid-19 en Algérie en chiffres
+                            Bilan du virus Covid-19 en Algérie en chiffres 5
                         </h1>
 
                         <div className={'white_info'}>Dernière mise à jour le {this.parser_date(this.state.global_dz.updatedAtCountry)}</div>
@@ -87,13 +93,13 @@ class Synthse extends React.Component{
                     <div className={"col-xs-8"} style={{paddingTop:"20px"}}>
 
                         <div className={"col-xs-6"}>
-                            <div  className={"info_item"}> <h1 style={{color:"#f2b3b3"}} className={"white_info"}> {this.state.global_dz.totalDead} Décés  </h1></div>
-                            <div className={"info_item"}>  <h1 style={{color:"#f2d6b3"}} className={"white_info"}>{this.state.global_dz.totalActive} Actifs  </h1> </div>
+                            <div  className={"info_item"}> <h1 style={{color:"#f2b3b3"}} className={"white_info"}> {numberWithSpaces(this.state.global_dz.totalDead)} Décés  </h1></div>
+                            <div className={"info_item"}>  <h1 style={{color:"#f2d6b3"}} className={"white_info"}>{numberWithSpaces(this.state.global_dz.totalActive)} Actifs  </h1> </div>
 
                         </div>
                         <div className={"col-xs-6"}>
-                            <div className={"info_item"}>  <h1 style={{color:"#f2d6b3"}} className={"white_info"}>{this.state.global_dz.totalConfirmed} Cas totale </h1> </div>
-                            <div className={"info_item"}> <h1 style={{color:"#b3f2c0"}} className={"white_info"}> {this.state.global_dz.totalRecovered} Guéries </h1> </div>
+                            <div className={"info_item"}>  <h1 style={{color:"#f2d6b3"}} className={"white_info"}>{numberWithSpaces(this.state.global_dz.totalConfirmed)} Cas totale </h1> </div>
+                            <div className={"info_item"}> <h1 style={{color:"#b3f2c0"}} className={"white_info"}> {numberWithSpaces(this.state.global_dz.totalRecovered)} Guéries </h1> </div>
 
                         </div>
 

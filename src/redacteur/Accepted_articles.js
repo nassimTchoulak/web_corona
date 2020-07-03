@@ -35,6 +35,14 @@ const Accepted_articles = (props)=>{
 
 
         return <div className={"col-xs-12"}>
+
+            <div className={"col-xs-12"}>
+                <h1 className={"synth_title col-xs-10"} style={{color:"#002148"}}>
+                    Tout les articles publiés
+                </h1>
+
+            </div>
+
             <div className={"col-xs-8 col-xs-offset-1"} style={{border:"solid 0px red"}}>
                 {
                     props.articles.accepted.map((i,itr)=>{

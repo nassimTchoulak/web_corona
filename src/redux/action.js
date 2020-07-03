@@ -42,7 +42,7 @@ export function get_world_data(){
             .then(response => response.json())
             .then(result => {
 
-                let tmp = data.rows ;
+                let tmp = result.rows ;
                 let final = [] ;
                 tmp.forEach((i)=>{
                     if(i.dataZones.length>0){

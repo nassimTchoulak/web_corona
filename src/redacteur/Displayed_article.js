@@ -20,6 +20,7 @@ class Displayed_article extends React.Component{
             this.redacteur = props.redacteur ;
 
 
+
             if( props.tags!==undefined ){
                 let tmp =[]
                 props.tags.forEach((i)=>{
@@ -49,13 +50,15 @@ class Displayed_article extends React.Component{
     }
     get_redacteur(){
 
-        if(this.redacteur.nom!==null){
-            return this.redacteur.nom
+        if(this.redacteur.username!==null){
+            return this.redacteur.username.substring(0,6)
         }
 
-        if(this.redacteur.username!==null){
-            return this.redacteur.username
+        if(this.redacteur.nom!==null){
+            return this.redacteur.nom.substring(0,6)
         }
+
+
 
         return this.redacteur.email.substring(0,6)
 
@@ -149,7 +152,11 @@ class Displayed_article extends React.Component{
                     </div>
 
 
-                    <div className={"col-xs-2"}  align={"right"} style={{display:"inline-block",textAlign:"right",marginTop:"05px",borderRadius:"50%",backgroundColor:color_from_string(this.redacteur.email),width:"30px",height:"30px"}}></div>
+                    {(this.redacteur.profileImageUrl===null)&&<div className={"col-xs-2"}  align={"right"} style={{display:"inline-block",textAlign:"right",marginTop:"05px",borderRadius:"50%",backgroundColor:color_from_string(this.redacteur.email),width:"30px",height:"30px"}}> </div>}
+
+
+                    {(this.redacteur.profileImageUrl!==null)&&<img className={"col-xs-2"}  align={"right"} src={this.redacteur.profileImageUrl} style={{display:"inline-block",textAlign:"right",marginTop:"05px",borderRadius:"50%",width:"30px",height:"30px"}} />}
+
                 </div>
 
                 {this.tags.map((i,itr)=>{
