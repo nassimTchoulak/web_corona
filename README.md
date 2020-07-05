@@ -1,7 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## covid-19 site made for 3 actors { article writers - mods - stats_mods }
+
+## Open [https://covid-19-cyber-inc.netlify.app/](https://covid-19-cyber-inc.netlify.app/) to view the deployed APP
+
+you may log in with test4@gmail.com / pwd:1234
+
 
 ## Available Scripts
-
 In the project directory, you can run:
 
 ### `npm start`
