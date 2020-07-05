@@ -40,7 +40,9 @@ class Map extends React.Component {
     calculate_raduis(nb_cas=1){
 
 
-        return Math.floor((Math.pow(this.state.viewport.zoom,2)*Math.pow(nb_cas,0.5))/5)
+        //return Math.floor((Math.pow(this.state.viewport.zoom,2)*Math.pow(nb_cas,0.5))/5)
+
+        return Math.floor((Math.pow(this.state.viewport.zoom/1.5,1.5)*Math.pow(nb_cas,0.35)))*1.5
 
         //     return Math.floor((Math.pow(this.state.viewport.zoom,2.5)*nb_cas)/10)
     }

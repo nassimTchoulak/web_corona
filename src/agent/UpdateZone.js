@@ -9,6 +9,7 @@ import Pin from "../reusable/Pin";
 import './newzone.css'
 import TableRowUpdate from "./TableRowUpdate";
 import {pinStyle} from "./NewZone";
+import {insert_zone_data} from "../http_requests/http_zones";
 
 class UpdateZone extends React.Component{
 
@@ -19,6 +20,8 @@ class UpdateZone extends React.Component{
         this.state = {
             error:false ,
             zones:[] ,
+            this_day:false ,
+            op_done:false ,
 
             viewport: {
                 width: "35vw",
@@ -92,7 +95,7 @@ class UpdateZone extends React.Component{
 
 
             <div className={"col-xs-7"} style={{paddingTop:"20px",minHeight:"65vh"}}>
-                                        <h3 className={"col-xs-12 update_title"}> Dernière BILAN du {this.parser_date(this.props.selected.updatedAtCountry)} </h3>
+                                        <h3 className={"col-xs-12 update_title"}> Dernière statistique du {this.parser_date(this.props.selected.updatedAtCountry)} </h3>
 
 
 
@@ -153,6 +156,108 @@ class UpdateZone extends React.Component{
                             </tbody>
                         </table>
                         clickez sur les elements pour pouvoir les modifier
+
+
+                        <div className={"col-xs-12"} style={{fontSize:"120%",padding:"50px"}}>
+                            {
+                                (this.state.zones.length===1)&&<div className={"col-xs-offset-3 col-xs-6"}><input type={"button"} className={"my_button_deep_blue"} value={" Ajouter le bilan du jour "}
+
+                                    onClick={()=>{this.setState({this_day:true})}}
+                                /> </div>
+                            }
+                        </div>
+
+                        {
+                            this.state.this_day&&<div className={"col-xs-12 stats_back"} onClick={()=>{
+                                this.setState({this_day:false})
+                            }}>
+
+                                <div className={"col-xs-12 stats_body"} onClick={(e)=>{ e.stopPropagation() ; }}>
+                                    <h1 color={"#002148"}> Inserez le bilan d'aujourd'hui pour cette zone  </h1>
+
+                                    <h3 className={"title_zone_new"} style={{padding:"20px"}}> Renseignement et bilan du jour : </h3>
+
+
+                                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
+                                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
+                                            <div className={"label_new col-xs-8"}> Nouveaux Cas Confirmés:</div>
+                                            <div className={"col-xs-4"}> <input id={"confirmed"} defaultValue={0} type={"number"} className={"my_text_box_v6"}/> </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
+                                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
+                                            <div className={"label_new col-xs-8"}> Nouveaux Cas Actifs:</div>
+                                            <div className={"col-xs-4"}> <input id={"actif"} defaultValue={0} type={"number"} className={"my_text_box_v6"}/> </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
+                                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
+                                            <div className={"label_new col-xs-8"}> Nouveaux Décès:</div>
+                                            <div className={"col-xs-4"}> <input id={"deads"} defaultValue={0} type={"number"} className={"my_text_box_v6"}/> </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div className={"col-xs-12"} style={{paddingTop:"10px"}}>
+                                        <div className={"col-xs-offset-2 col-xs-8"} style={{textAlign:"left"}}>
+                                            <div className={"label_new col-xs-8"}> Nouveaux Guéris:</div>
+                                            <div className={"col-xs-4"}> <input id={"gueris"} defaultValue={0} type={"number"} className={"my_text_box_v6"}/> </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={"col-xs-12"} style={{paddingTop:"60px",fontSize:"120%"}}>
+                                        <div className={"col-xs-6 col-xs-offset-3"}>
+                                            {(!this.state.op_done)&&<input type={"button"} className={"my_button_deep_blue"} value={" Ajouter ce bilan "} onClick={()=>{
+                                               // alert("hello")
+                                                console.log(this.state.zones[0])
+
+                                                let token = localStorage.getItem("token")
+
+                                                let actif = Number( document.querySelector("#actif").value )||0 ;
+                                                let dead = Number(document.querySelector("#deads").value )||0;
+                                                let confirmed = Number(document.querySelector("#confirmed").value )||0;
+                                                let gueris =Number( document.querySelector("#gueris").value )||0;
+
+
+
+                                                let raw4 = JSON.stringify({"totalPorteur":0,
+                                                    "totalSustects":this.state.zones[0].totalSustects,
+                                                    "totalConfirmed":this.state.zones[0].totalConfirmed+confirmed,
+                                                    "totalDead":this.state.zones[0].totalDead+dead,
+                                                    "totalRecovered":this.state.zones[0].totalRecovered+gueris,
+                                                    "dailyDeaths":0,
+                                                    "totalActive":this.state.zones[0].totalActive+actif,
+                                                    "totalCritical":this.state.zones[0].totalCritical,
+                                                    "valide": false,
+                                                    "zoneZoneId":this.state.zones[0].zoneId});
+
+                                                insert_zone_data(token,data.zoneId,raw4).then((result)=>{
+                                                    console.log(result)
+                                                    this.setState({op_done:true})
+                                                }).catch((err)=>{
+                                                    console.log(err)
+                                                })
+
+                                            }}/>}
+
+                                            {
+                                                (this.state.op_done)&&<h2 color={"#002148"}>
+                                                    L'insertion s'est effectué avec success , l'action sera  validé définitivement par le modérateur
+                                                </h2>
+                                            }
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        }
+
                     </div>
 
 

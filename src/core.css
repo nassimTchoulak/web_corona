@@ -101,3 +101,26 @@ a.menu_item:hover{
     background-color: #002143;
     height: 100vh;
 }
+
+.notif_item{
+    background-color: #f2f2f2;
+    color: #261326;
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: solid 1px #001531;
+    font-size: 80%;
+    text-decoration: none;
+    z-index: 600;
+    min-height: 40px;
+}
+.notif_item:hover{
+    background-color: #f2b3b3;
+    text-decoration: none;
+}
+
+a.notif_item{
+    background-color: #f2f2f2;
+    color: #261326;
+    cursor: pointer;
+    text-decoration: none;
+}

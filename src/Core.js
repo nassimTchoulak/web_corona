@@ -42,10 +42,10 @@ const Head_sante = ({ routes }) =>{
             <div className={"col-xs-1"} >  <div onClick={()=>{
                 window.location.pathname='/'
             }} className={"menu_item"}> <img src={IP+"/api/v0/assets/logo.png"} className={"image_logo"}  /> </div> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/sante"} className={"menu_item"}> Synthèse </NavLink> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/sante"} className={"menu_item"}> Statistiques</NavLink> </div>
-            <div className={"col-xs-2 col-xs-offset-3"} >  <NavLink to={"/"} className={"menu_item"}> Mes Consignes </NavLink> </div>
-            <div className={"col-xs-2"} >  <NavLink to={"/redaction"} className={"menu_item"}> Profil </NavLink> </div>
+            <div className={"col-xs-3"} >  <NavLink to={"/sante"} className={"menu_item"}> Synthèse </NavLink> </div>
+
+            <div className={"col-xs-3 col-xs-offset-4"} >  <NavLink to={"/sante/world"} className={"menu_item"}> Carte International</NavLink> </div>
+
     </div>
 
         <div className={"col-xs-12 zero_pad"} style={{"backgroundColor":"white"}}>
@@ -98,7 +98,7 @@ const HEAD_moderateur = ({routes}) =>{
     const [list,set_list] = useState([])
     const [visible,set_visible] = useState(false)
 
-    setInterval(()=>{
+    const synch_all = ()=>{
         let requestOptions = {
             method: 'GET',
             redirect: 'manual'
@@ -122,36 +122,91 @@ const HEAD_moderateur = ({routes}) =>{
 
             })
             .catch(error => console.log('error', error));
+    }
+
+
+    setInterval(()=>{
+        synch_all()
     },10000)
 
 
     return <div className={"col-xs-12 zero_pad"}>
 
-        <div className={"col-xs-2  menu_mod"}  style={{position:"sticky",height:"100vh",top:"0"}}>
+        <div className={"col-xs-2  menu_mod"}  style={{position:"sticky",height:"100vh",top:"0",zIndex:"100"}}>
             <div className={"col-xs-12"} >  <div to={"/"} onClick={()=>{
                 window.location.pathname='/'
             }} className={"menu_item"} style={{paddingTop:"0px !important",cursor:"pointer"}} > <img className={"image_logo_redaction"} src={IP+"/api/v0/assets/logo_horizantal.png"} /> </div> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/world"} className={"menu_item"}> Carte Mondiale </NavLink> </div>
-            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/world/stats"} className={"menu_item"}> Statistiques </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/world/stats"} className={"menu_item"}> Données de Zones </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>   Articles rédacteurs</NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/centres/disponibles"} className={"menu_item"}>  Centres d'acceuil </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/video/valide"} className={"menu_item"}>  Videos utlisateur </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/robots/valide"} className={"menu_item"}> Publications des robots </NavLink> </div>
-            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/signal/valide"} className={"menu_item"}> les signalements  </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/signal/valide"} className={"menu_item"}> Les signalements  </NavLink> </div>
 
             <div className={"col-xs-12 menu_item"}  onClick={()=>{
-                alert("g")
+
                 set_visible(!visible)
 
             }} style={{cursor:"pointer"}}>  Notifications
               <span style={{color:"snow"}}>  <span style={{color:(list.length===0)?"#e3e3e3":"#ff4275"}} className={"glyphicon glyphicon-bell"}> </span>  </span>
 
                 {
-                    visible&&<div style={{position:"relative"}} >
+                    visible&&<div style={{position:"relative",zIndex:200}} >
 
-                        <div className={"col-xs-4"} style={{position:"absolute",top:"0px",left:"100px"}}>
-                            <div className={"col-xs-12"} style={{backgroundColor:"#b0b5ba"}}>
-                                hello
+                        <div style={{position:"absolute",top:"-200px",left:"16.66vw",width:"16.66vw",borderRadius:"5px 5px", border:"solid 1px #a0a0a0"}}>
+                            <div className={"col-xs-12 zero_pad"} style={{backgroundColor:"#eeeeee",zIndex:"200"}}>
+                                {
+                                    list.map((i)=>{
+                                        return <NavLink onClick={()=>{
+                                            let myHeaders = new Headers();
+                                            myHeaders.append("Content-Type", "application/json");
+
+                                            let raw = JSON.stringify({"isSeen":"true"});
+
+                                            let requestOptions = {
+                                                method: 'PATCH',
+                                                headers: myHeaders,
+                                                body: raw,
+                                                redirect: 'manual'
+                                            };
+
+                                            fetch(IP+"/api/v0/notification-moderateur/"+i.notificationModerateurId, requestOptions)
+                                                .then(response => response.text())
+                                                .then(result => {
+                                                    synch_all()
+
+                                                })
+                                                .catch(error => console.log('error', error));
+
+                                        }} to={ (()=>{
+                                            if(i.typeContenu==="video"){
+                                                return "/moderateur/video/attente"
+                                            }
+                                            if(i.typeContenu==="article"){
+                                                return "/moderateur/articles/submitted"
+                                            }
+                                        })() } className={"col-xs-12 notif_item"} >
+
+                                            {(()=>{
+                                            if(i.typeContenu==="video"){
+                                            return "de nouveaux video utlisateur disponibles"
+                                        }
+                                            if(i.typeContenu==="article"){
+                                            return " de nouveaux articles disponible "
+                                        }
+                                        })()}
+
+                                        </NavLink>
+                                    })
+                                }
+                                {
+                                    ( list.length===0)&&<div style={{color:"#979797"}} className={"col-xs-12"}> Aucunne notification </div>
+                                }
+
+                                <div className={"col-xs-12 notif_item"} onClick={()=>{
+                                    set_visible(false)
+                                }} style={{fontWeight:"bold",padding:"10px"}}> Close <span className={"glyphicon glyphicon-chevron-up"}> </span> </div>
                             </div>
                         </div>
                     </div>
@@ -216,6 +271,12 @@ const routes = [
                 path:"/sante/new_zone",
                 exact:true,
                 component:NewZone
+            },
+
+            {
+              path:"/sante/world",
+              exact: true ,
+              component: WorldMap
             },
             {
                 path:"/sante/redaction",
