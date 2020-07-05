@@ -27,6 +27,10 @@ const FirstAction = ()=>{
 
         <div className={"col-xs-offset-2 col-xs-8"}>
             <h2> Portaille dédiée aux Acteurs du Ministère de la Santé en relation au COVID-19 </h2>
+
+            <div className={"my_button_green"} onClick={()=>{
+                window.location.pathname='/map'
+            }} ><h4>La carte Internationale de COVID-19</h4></div>
         </div>
 
 

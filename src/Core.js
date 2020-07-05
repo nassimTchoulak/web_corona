@@ -252,6 +252,11 @@ const routes = [
             component:FirstAction,
             exact:true,
         },
+    {
+        path:"/map",
+        component:WorldMap,
+        exact:true,
+    },
         {
         path:"/sante",
         component:Head_sante,
