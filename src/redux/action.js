@@ -21,6 +21,11 @@ export const GET_WORLD_DATA ='GET_WORLD_DATA'
 
 export const SET_WORLD_SELECTED ='SEt_WORLD_SELECTED'
 
+export const SET_VISIBLE_STATS = 'SET_VISIBLE_sSTATS'
+
+export function set_visible_stats(bool){
+    return { type:SET_VISIBLE_STATS , payload:bool }
+}
 
 export function set_selected_zone_world(obj){
     return { type:SET_WORLD_SELECTED , payload :obj }

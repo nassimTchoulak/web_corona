@@ -113,11 +113,11 @@ class VideoArticle extends React.Component{
             <div className="col-xs-3">
 
 
-                <div className={"col-xs-12"}>  <h3 style={{color:"#00152f",padding:"0",marginTop:"5px"}} > {this.titre.toLowerCase()}</h3> </div>
+                <div className={"col-xs-12"}>  <h3 style={{color:"#00152f",padding:"0",marginTop:"5px"}} > {decodeURI(this.titre.toLowerCase()).replace(/\+/g, " ")}</h3> </div>
 
                 <h3 style={{color:"#002148"}} align={"left"}>Description : </h3>
 
-                <p style={{paddingTop:"10px",fontSize:"110%"}}>{this.description}</p>
+                <p style={{paddingTop:"10px",fontSize:"110%"}}>{decodeURI(this.description).replace(/\+/g, " ")}</p>
 
                 <div className={"col-xs-12"} style={{paddingTop:"20px",color:"#002148",fontSize:"120%"}}>
                     Publié il y a {parser_diff_comment(this.dateVideo)}

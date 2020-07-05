@@ -3,9 +3,11 @@ import {connect} from 'react-redux'
 import IP, {API_TOKEN} from "../../redux/Ip_provider";
 import {numberWithSpaces, parser_date} from "../../http_requests/dataCalcule";
 import Footer from "../../reusable/Footer";
-import {get_world_data , set_selected_zone_world} from "../../redux/action";
+import {get_world_data, set_selected_zone_world, set_visible_stats} from "../../redux/action";
 import ReactMapGL, {Marker} from "react-map-gl";
 import coords_map from "../../redux/wilayas.json";
+import './worldmap.css'
+import ZoneStats from "./ZoneStats";
 
 
 const WorldMap = (props)=>{
@@ -14,7 +16,7 @@ const WorldMap = (props)=>{
     const calculate_raduis = (nb_cas=1)=>{
 
 
-        return Math.floor((Math.pow(viewport.zoom,2)*Math.pow(nb_cas,0.4))/5)
+        return Math.floor((Math.pow(viewport.zoom/1.5,1.5)*Math.pow(nb_cas,0.3)))
 
         //     return Math.floor((Math.pow(this.state.viewport.zoom,2.5)*nb_cas)/10)
     }
@@ -26,6 +28,8 @@ const WorldMap = (props)=>{
         totalRecovered:0 ,
         updatedAtCountry:""
     })
+
+
 
     const [viewport,set_view_port] = useState( {
             width: "80vw",
@@ -120,7 +124,7 @@ const WorldMap = (props)=>{
 
                                 props.world_data_zones.map((i,itr)=>{
                                     return  <Marker key={itr}
-                                                    {...i} >   <div className={"zone"} onMouseEnter={()=>{  }}
+                                                    {...i} >   <div className={"zone"} onMouseEnter={()=>{ props.set_selected_zone_world(i)  }}
                                                                                          style={{height:calculate_raduis(i.totalConfirmed),width:calculate_raduis(i.totalConfirmed)}}> </div>
                                     </Marker>
                                 })
@@ -132,14 +136,22 @@ const WorldMap = (props)=>{
 
 
                             {
-                                (props.world_data_selected.city!==undefined)&& <Marker   {...this.props.dz_now.selected} >   <div className={"zone_selected "}
-                                                                                                                                                                      style={{height:this.calculate_raduis(props.world_data_selected.totalConfirmed),width:this.calculate_raduis(props.world_data_selected.totalConfirmed)}} > </div>
+                                (props.world_data_selected.city!==undefined)&& <Marker   {...props.world_data_selected} >   <div className={"zone_selected "}
+                                                                     style={{height:calculate_raduis(props.world_data_selected.totalConfirmed),width:calculate_raduis(props.world_data_selected.totalConfirmed)}} > </div>
 
-                                    <div className={"selected_zone_info"}>
-                                        <div style={{fontWeight:"bold"}} className={"col-xs-12"}>{props.world_data_selected.city.toUpperCase()}</div>
-                                        <div className={"col-xs-12"}>{props.world_data_selected.totalConfirmed} Cas</div>
-                                        <div className={"col-xs-12"}>{props.world_data_selected.totalDead} Décès</div>
-                                        <div className={"col-xs-12"}>{props.world_data_selected.totalActive} Actifs</div>
+                                    <div className={"selected_international_zone"}>
+                                        <div style={{fontWeight:"bold"}} className={"col-xs-12"}>{props.world_data_selected.country.toUpperCase()}</div>
+                                        <div style={{fontWeight:"bold",fontSize:"80%",textAlign:"center"}} className={"col-xs-12"}>  {props.world_data_selected.city.toUpperCase()}</div>
+
+                                        <div className={"col-xs-12"}>{numberWithSpaces(props.world_data_selected.totalConfirmed)} Cas</div>
+                                        <div className={"col-xs-12"}>{numberWithSpaces(props.world_data_selected.totalRecovered)} guéris</div>
+                                        <div className={"col-xs-12"}>{numberWithSpaces(props.world_data_selected.totalDead)} Décès</div>
+                                        <div className={"col-xs-12"}>{numberWithSpaces(props.world_data_selected.totalActive)} Actifs</div>
+
+
+                                        <div className={"col-xs-12"} style={{paddingTop:"20px"}}>
+                                            <input type={"button"} value={"GRAPH"} className={"my_button_reject"} onClick={()=>{ props.set_visible_stats(true) }}/>
+                                        </div>
 
 
                                     </div>
@@ -157,6 +169,8 @@ const WorldMap = (props)=>{
 
         </div>
 
+        <ZoneStats />
+
 
 
         <Footer />
@@ -168,7 +182,7 @@ const WorldMap = (props)=>{
 }
 
 const mapDispatchToProps = {
-    get_world_data , set_selected_zone_world
+    get_world_data , set_selected_zone_world ,set_visible_stats
 }
 
 const mapStateToProps = (state) =>{

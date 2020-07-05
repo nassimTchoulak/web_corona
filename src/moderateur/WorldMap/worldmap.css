@@ -1,0 +1,44 @@
+.selected_international_zone{
+
+    font-family: Quicksand;
+    position: absolute;
+    font-weight: lighter;
+    text-align: left;
+    padding-left: 20px;
+    margin-top: 5px;
+    color: #001531;
+    top:0 ;
+    background-image:linear-gradient(to top right, #eff1f6, #b8d0d3);
+    width: 200px;
+    font-size: 1.3em;
+    padding-right: 0px;
+    border-radius: 5px 5px;
+    padding-bottom: 10px;
+
+}
+
+.stats_back{
+    background-color: rgba(0,0,0,0.2);
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left:0 ;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+
+
+}
+
+.stats_body{
+    color: #001531;
+    z-index: 101;
+    border-radius: 7px 7px;
+    background-color: snow;
+    border: solid 2px #001531;
+    padding: 30px;
+    height: 90vh;
+    width: 80vw;
+    margin-top: 5vh;
+    margin-left: 10vw;
+}

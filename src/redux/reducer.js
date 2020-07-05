@@ -6,7 +6,7 @@ import {
     GET_DZ_RISK,
     SET_VISIBLE_RISK,
     SET_UPDATE_ZONE,
-    GET_ARTICLES_ACCEPTED_BY_PAGE, DISALLOW_ARTICLE_PAGE, GET_WORLD_DATA, SET_WORLD_SELECTED
+    GET_ARTICLES_ACCEPTED_BY_PAGE, DISALLOW_ARTICLE_PAGE, GET_WORLD_DATA, SET_WORLD_SELECTED, SET_VISIBLE_STATS
 } from "./action"
 
 
@@ -37,7 +37,8 @@ const init_state = {
     world_data :{
       loaded :false ,
       zones :[] ,
-      selected:{}
+      selected:{} ,
+        visible_stats : false
     },
 
 
@@ -178,6 +179,7 @@ export function defaultReducer(state=init_state,action) {
             state = {
                 ...state ,
                 world_data: {
+                    visible_stats: false ,
                     loaded: true ,
                     selected: {} ,
                     zones : action.payload
@@ -196,6 +198,15 @@ export function defaultReducer(state=init_state,action) {
             }
             break
 
+        case SET_VISIBLE_STATS:
+            state = {
+                ...state ,
+                world_data: {
+                    ...state.world_data ,
+                    visible_stats: action.payload
+                }
+            }
+            break
 
         default:
 

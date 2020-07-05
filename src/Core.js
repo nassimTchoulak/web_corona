@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './core.css'
 import IP from './redux/Ip_provider'
@@ -26,6 +26,9 @@ import Publication_holder_accepted from "./moderateur/publication/publication_ho
 import Publication_holder from "./moderateur/publication/publication_holder";
 import WorldMap from "./moderateur/WorldMap/WorldMap";
 import ProfilRedacteur from "./redacteur/ProfilRedacteur";
+import statistiquesDZ from "./moderateur/WorldMap/statistiquesDZ";
+import Signalement_Accepted from "./moderateur/signalements/Signalments_Accepted";
+import Signalement_Attente from "./moderateur/signalements/Signalement_Attente";
 
 const Head_sante = ({ routes }) =>{
 
@@ -92,6 +95,35 @@ const HEAD_moderateur = ({routes}) =>{
         return <Login_moderateur />
     }
 
+    const [list,set_list] = useState([])
+    const [visible,set_visible] = useState(false)
+
+    setInterval(()=>{
+        let requestOptions = {
+            method: 'GET',
+            redirect: 'manual'
+        };
+
+        fetch(IP+"/api/v0/notification-moderateur/", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                let nb_not =0
+                let tmp = []
+
+                result.rows.forEach((i)=>{
+                    if((i.moderateurModerateurId===1)&&(!i.isSeen)) {
+                        tmp.push(i)
+                    }
+
+                })
+                console.log(tmp)
+
+                set_list(tmp)
+
+            })
+            .catch(error => console.log('error', error));
+    },10000)
+
 
     return <div className={"col-xs-12 zero_pad"}>
 
@@ -100,12 +132,33 @@ const HEAD_moderateur = ({routes}) =>{
                 window.location.pathname='/'
             }} className={"menu_item"} style={{paddingTop:"0px !important",cursor:"pointer"}} > <img className={"image_logo_redaction"} src={IP+"/api/v0/assets/logo_horizantal.png"} /> </div> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/world"} className={"menu_item"}> Carte Mondiale </NavLink> </div>
-            <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Statistiques </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/world/stats"} className={"menu_item"}> Statistiques </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/articles/accepted"} className={"menu_item"}>   Articles rédacteurs</NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/centres/disponibles"} className={"menu_item"}>  Centres d'acceuil </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/video/valide"} className={"menu_item"}>  Videos utlisateur </NavLink> </div>
             <div className={"col-xs-12"} >  <NavLink to={"/moderateur/robots/valide"} className={"menu_item"}> Publications des robots </NavLink> </div>
-            <div className={"col-xs-12"} >  <NavLink to={"/moderateur"} className={"menu_item"}> Notifications </NavLink> </div>
+            <div className={"col-xs-12"} >  <NavLink to={"/moderateur/signal/valide"} className={"menu_item"}> les signalements  </NavLink> </div>
+
+            <div className={"col-xs-12 menu_item"}  onClick={()=>{
+                alert("g")
+                set_visible(!visible)
+
+            }} style={{cursor:"pointer"}}>  Notifications
+              <span style={{color:"snow"}}>  <span style={{color:(list.length===0)?"#e3e3e3":"#ff4275"}} className={"glyphicon glyphicon-bell"}> </span>  </span>
+
+                {
+                    visible&&<div style={{position:"relative"}} >
+
+                        <div className={"col-xs-4"} style={{position:"absolute",top:"0px",left:"100px"}}>
+                            <div className={"col-xs-12"} style={{backgroundColor:"#b0b5ba"}}>
+                                hello
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
         </div>
         <div className={"col-xs-10 zero_pad"}>
             <div className={"col-xs-12 zero_pad"} style={{"backgroundColor":"white"}}>
@@ -262,7 +315,22 @@ const routes = [
                 path:"/moderateur/world",
                 exact: true ,
                 component:WorldMap
-            }
+            } ,
+            {
+                path: "/moderateur/world/stats",
+                exact: true ,
+                component: statistiquesDZ
+            },
+            {
+                path:"/moderateur/signal/valide",
+                exact: true ,
+                component : Signalement_Accepted
+            },
+            {
+                path:"/moderateur/signal/attente",
+                exact: true ,
+                component : Signalement_Attente
+            },
 
         ]
 
